@@ -1,0 +1,9 @@
+POST http://localhost:8080/api/comments
+Content-Type: application/json
+
+{ 
+  "userId": "62a79c42e0a65ed2a3ec0f39",
+  "body": "This is a body",
+  "image_src": "http://placeimg.com/640/480/city",
+  "postId": "62a7f192c709d9512dbd3fe8"
+}

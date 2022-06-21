@@ -1,0 +1,12 @@
+PUT http://localhost:8080/api/users/62a294fe234ec29e2c11eb6a
+Content-Type: application/json
+
+{
+  "name": "dddd",
+  "lastName": "Sugar",
+  "username": "coffev1234",
+  "email": "",
+  "website": "http://www.coffee.com",
+  "description": "Coffee is a brewed drink prepared from roasted coffee beans, which are the seeds of berries from the Coffea plant. Coffee is brewed by expressing the bean seeds in hot water, which is usually 110 degrees Fahrenheit (190 degrees Celsius).",
+  "password": "123456"
+}

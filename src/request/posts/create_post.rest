@@ -1,0 +1,9 @@
+POST http://localhost:8080/api/posts
+Content-Type: application/json
+
+{ 
+  "userId": "62a6b52ef6697a03353ab99a",
+  "title": "This is a title",
+  "body": "This is a body",
+  "image_src": "http://placeimg.com/640/480/city"
+}
