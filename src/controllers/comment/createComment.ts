@@ -67,6 +67,7 @@ const createComment = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(httpStatus.serverError.code).json({
           message: httpStatus.serverError.message,
         })
+        break
     }
   }
 }
