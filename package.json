@@ -2,6 +2,7 @@
   "name": "nikafeis",
   "version": "0.1.0",
   "private": true,
+  "author": "JsMarenco <jsmarenco.dev@gmail.com>",
   "scripts": {
     "start": "next start",
     "dev": "next dev",
