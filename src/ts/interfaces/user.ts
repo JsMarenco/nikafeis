@@ -7,6 +7,7 @@ import { Schema } from "mongoose"
  * Interface representing an user.
  */
 export interface IUser {
+  id?: string
   username: string
   email: string
   password: string
