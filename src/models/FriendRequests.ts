@@ -1,7 +1,10 @@
-// Imports from third-party libraries
+// Third-party dependencies
 import { Schema, model, models } from "mongoose"
 
-const FriendRequestSchema = new Schema(
+// Current project dependencies
+import { IFriendRequest } from "@/ts/interfaces/friendRequest"
+
+const FriendRequestSchema = new Schema<IFriendRequest>(
   {
     from: {
       type: Schema.Types.ObjectId,
@@ -33,7 +36,7 @@ const FriendRequest =
 FriendRequestSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
-    delete returnedObject.__v
+    delete returnedObject._id
   },
 })
 
