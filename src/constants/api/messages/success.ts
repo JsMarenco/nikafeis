@@ -50,6 +50,9 @@ const successMessages = {
     generatingFakePosts: "Generating fake posts...",
     testDataLoadedSuccessfully: "All test data loaded successfully!",
   },
+  authentication: {
+    login: "Login successful!",
+  },
 }
 
 export default successMessages
