@@ -1,6 +1,10 @@
+// Third-party dependencies
 import { Schema, model, models } from "mongoose"
 
-const UserSchema = new Schema(
+// Current project dependencies
+import { IUser } from "@/ts/interfaces/user"
+
+const UserSchema = new Schema<IUser>(
   {
     // Personal Information
     username: {
@@ -105,7 +109,7 @@ const User = models.User || model("User", UserSchema)
 UserSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
-    delete returnedObject.__v
+    delete returnedObject._id
   },
 })
 
