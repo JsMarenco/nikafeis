@@ -18,9 +18,11 @@ To run this project, you will need to add the following environment variables to
 `CLOUDINARY_API_SECRET`
 
 ### MongoDB
-`MONGODB_URI`
+`DB_NAME`
 
-`MONGODB_URI_TEST`
+`DB_USER`
+
+`DB_PASSWORD`
 
 ### JWT configuration
 `JWT_SECRET`
