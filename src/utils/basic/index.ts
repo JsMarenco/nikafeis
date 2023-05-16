@@ -1,5 +1,6 @@
 // Third-party dependencies
 import { v4 as uuid } from "uuid"
+import jwt from "jsonwebtoken"
 
 // Current project dependencies
 
@@ -35,4 +36,29 @@ export const generateUsername = (): string => {
   const username = `user-${uuid()}`
 
   return username.substring(0, 15)
+}
+
+/**
+ * Generates a JWT (JSON Web Token).
+ *
+ * @param {object} payload - The payload object to include in the JWT.
+ * @param {string} expiresIn - The duration of the JWT (e.g., "1h", "2d", "30m").
+ * @returns {Promise<string>} A promise that resolves to the generated JWT.
+ */
+export const generateJWT = async (
+  payload: object,
+  expiresIn: string
+): Promise<string> => {
+  try {
+    const secret = process.env.JWT_SECRET || "secret"
+
+    const options = { expiresIn }
+
+    const token = jwt.sign(payload, secret, options)
+
+    return token
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
 }
