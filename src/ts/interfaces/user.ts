@@ -29,3 +29,13 @@ export interface IUser {
   createdAt: Date
   updatedAt: Date
 }
+
+/**
+ * User projection for populating fields.
+ */
+export const userProjection = {
+  username: 1,
+  firstname: 1,
+  lastname: 1,
+  avatarUrl: 1,
+}
