@@ -16,6 +16,4 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         message: httpStatus.methodNotAllowed.message,
       })
   }
-
-  res.status(200).json({ status: "Active" })
 }
