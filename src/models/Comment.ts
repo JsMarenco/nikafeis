@@ -1,7 +1,10 @@
-// Imports from third-party libraries
+// Third-party dependencies
 import { Schema, model, models } from "mongoose"
 
-const CommentSchema = new Schema(
+// Current project dependencies
+import { IComment } from "@/ts/interfaces/comment"
+
+const CommentSchema = new Schema<IComment>(
   {
     content: {
       type: String,
@@ -25,16 +28,16 @@ const CommentSchema = new Schema(
   { timestamps: true }
 )
 
+CommentSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+  },
+})
+
 /**
  * Comment Model
  */
 const Comment = models.Comment || model("Comment", CommentSchema)
-
-CommentSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject.__v
-  },
-})
 
 export default Comment
