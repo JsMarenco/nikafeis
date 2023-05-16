@@ -5,6 +5,7 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import httpStatus from "@/constants/common/httpStatus"
 import getPost from "@/controllers/post/getPost"
 import deletePost from "@/controllers/post/deletePost"
+import updatePost from "@/controllers/post/updatePost"
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
@@ -14,6 +15,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     case "DELETE":
       deletePost(req, res)
+      break
+
+    case "PUT":
+      updatePost(req, res)
       break
 
     default:
