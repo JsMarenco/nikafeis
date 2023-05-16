@@ -1,14 +1,10 @@
-// Imports from third-party libraries
+// Third-party dependencies
 import { Schema, model, models } from "mongoose"
 
-export const postLimits = {
-  content: {
-    max: 4000,
-  },
-}
+// Current project dependencies
+import { IPost } from "@/ts/interfaces/post"
 
-// post schema
-const PostSchema = new Schema(
+const PostSchema = new Schema<IPost>(
   {
     // Basic post information
     title: {
@@ -68,7 +64,6 @@ PostSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
-    delete returnedObject.__v
   },
 })
 
