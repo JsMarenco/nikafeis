@@ -22,8 +22,10 @@ const errorMessages = {
   },
   password: {
     passwordsDoNotMatch: "Passwords do not match",
-    passwordMinLength: "The password must be at least %s characters long",
-    passwordMaxLength: "The password must be no longer than %s characters",
+    passwordMinLength: (length: number) =>
+      `The password must be at least ${length} characters long`,
+    passwordMaxLength: (length: number) =>
+      `The password must be no longer than ${length} characters`,
   },
   post: {
     postNotFound: "Post not found",
