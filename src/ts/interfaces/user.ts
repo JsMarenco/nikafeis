@@ -39,3 +39,12 @@ export const userProjection = {
   lastname: 1,
   avatarUrl: 1,
 }
+
+/**
+ * Register user type
+ */
+type TRegisterUserPicked = "firstname" | "lastname" | "email" | "password"
+
+export interface IRegisterUser extends Pick<IUser, TRegisterUserPicked> {
+  confirmPassword: string
+}
