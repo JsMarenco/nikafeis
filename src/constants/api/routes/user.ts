@@ -16,6 +16,10 @@ const apiUserRoutes = {
 
   deleteFriend: (userId: string, friendId: string) =>
     `${baseUrl}/${userId}/friends/${friendId}`,
+
+  getUserFriends: (userId: string) => `${baseUrl}/${userId}/friends`,
+
+  getUserConnections: (userId: string) => `${baseUrl}/${userId}/connections`,
 }
 
 export default apiUserRoutes
