@@ -13,6 +13,9 @@ const apiUserRoutes = {
     `${baseUrl}/${username}/posts?offset=${offset}&limit=${limit}`,
 
   deleteUser: (userId: string) => `${baseUrl}/${userId}`,
+
+  deleteFriend: (userId: string, friendId: string) =>
+    `${baseUrl}/${userId}/friends/${friendId}`,
 }
 
 export default apiUserRoutes
