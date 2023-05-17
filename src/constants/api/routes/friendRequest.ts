@@ -13,11 +13,18 @@ const apiFriendRequestRoutes = {
   accept: (requestId: string, receiverId: string): string =>
     `${baseUrl}?requestId=${requestId}&receiverId=${receiverId}`,
 
-  getFriendRequestsByUserId: (
+  getSentFriendRequestsByUserId: (
     userId: string,
     offset: number,
     limit: number
-  ): string => `${baseUrl}/user/${userId}?offset=${offset}&limit=${limit}`,
+  ): string => `${baseUrl}/user/${userId}/sent?offset=${offset}&limit=${limit}`,
+
+  getReceivedFriendRequestsByUserId: (
+    userId: string,
+    offset: number,
+    limit: number
+  ): string =>
+    `${baseUrl}/user/${userId}/received?offset=${offset}&limit=${limit}`,
 }
 
 export default apiFriendRequestRoutes
