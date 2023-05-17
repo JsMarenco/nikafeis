@@ -20,3 +20,10 @@ export interface IPost {
   createdAt: Date
   updatedAt: Date
 }
+
+type TUpdatePostOmit = Omit<IPost, "id" | "updatedAt" | "createdAt">
+
+/**
+ * Update Post
+ */
+export interface IUpdatePost extends Partial<TUpdatePostOmit> {}
