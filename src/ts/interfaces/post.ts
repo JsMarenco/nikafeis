@@ -27,3 +27,9 @@ type TUpdatePostOmit = Omit<IPost, "id" | "updatedAt" | "createdAt">
  * Update Post
  */
 export interface IUpdatePost extends Partial<TUpdatePostOmit> {}
+
+/**
+ * Create Post
+ */
+
+export interface ICreatePost extends Pick<IPost, "title" | "content"> {}
