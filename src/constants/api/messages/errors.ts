@@ -17,8 +17,6 @@ const errorMessages = {
     userAlreadyExists: "User already exists",
     usernameNotAvailable: "Username is not available",
     emailIsNotAvailable: "Email is not available",
-    receiverUserNotFound:
-      "The user you are trying to add as a friend was not found",
   },
   password: {
     passwordsDoNotMatch: "Passwords do not match",
@@ -42,6 +40,8 @@ const errorMessages = {
     alreadyFriends: "You are already friends with this user",
     cannotRejectOwnRequest: "You cannot reject your own request",
     notYourFriend: "This user is not your friend",
+    receiverUserNotFound:
+      "The user you are trying to add as a friend was not found",
   },
   common: {
     requiredFields: "Please provide all required fields",
