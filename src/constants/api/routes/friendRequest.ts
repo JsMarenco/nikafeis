@@ -1,6 +1,6 @@
 const baseUrl: string = "/api/friend-requests"
 
-const apiFriendRequest = {
+const apiFriendRequestRoutes = {
   send: (senderId: string, receiverId: string): string =>
     `${baseUrl}/send?senderId=${senderId}&receiverId=${receiverId}`,
 
@@ -20,4 +20,4 @@ const apiFriendRequest = {
   ): string => `${baseUrl}/user/${userId}?offset=${offset}&limit=${limit}`,
 }
 
-export default apiFriendRequest
+export default apiFriendRequestRoutes
