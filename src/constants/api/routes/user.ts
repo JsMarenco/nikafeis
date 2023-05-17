@@ -1,7 +1,13 @@
-const apiUserRoutes = {
-  login: "/api/users/login",
+const baseUrl = "/api/users"
 
-  register: "/api/users/register",
+const apiUserRoutes = {
+  login: `${baseUrl}/login`,
+
+  register: `${baseUrl}/register`,
+
+  getUserByUsername: (username: string) => `${baseUrl}/${username}`,
+
+  getUserById: (userId: string) => `${baseUrl}/${userId}`,
 }
 
 export default apiUserRoutes
