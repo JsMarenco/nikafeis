@@ -39,10 +39,12 @@ const errorMessages = {
       "You cannot accept a friend request that was not sent to you",
     alreadyFriends: "You are already friends with this user",
     cannotRejectOwnRequest: "You cannot reject your own request",
-    notYourFriend: "This user is not your friend",
     receiverUserNotFound:
       "The user you are trying to add as a friend was not found",
     requestAlreadySent: "Friend request already sent to this user",
+  },
+  friendship: {
+    notYourFriend: "This user is not your friend",
   },
   common: {
     requiredFields: "Please provide all required fields",
