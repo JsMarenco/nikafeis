@@ -55,6 +55,9 @@ const errorMessages = {
     routeNotFound: "Route not found",
     unknown: "An unknown error has occurred",
   },
+  comment: {
+    notFound: "Comment not found",
+  },
 }
 
 export default errorMessages
