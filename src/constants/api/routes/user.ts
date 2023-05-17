@@ -3,7 +3,7 @@ const baseUrl = "/api/users"
 const apiUserRoutes = {
   login: `${baseUrl}/login`,
 
-  register: `${baseUrl}/register`,
+  register: `${baseUrl}`,
 
   getUserByUsername: (username: string) => `${baseUrl}/${username}`,
 
@@ -11,6 +11,8 @@ const apiUserRoutes = {
 
   getUserPostsByUsername: (username: string, offset: number, limit: number) =>
     `${baseUrl}/${username}/posts?offset=${offset}&limit=${limit}`,
+
+  deleteUser: (userId: string) => `${baseUrl}/${userId}`,
 }
 
 export default apiUserRoutes
