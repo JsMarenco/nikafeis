@@ -42,6 +42,7 @@ const errorMessages = {
     notYourFriend: "This user is not your friend",
     receiverUserNotFound:
       "The user you are trying to add as a friend was not found",
+    requestAlreadySent: "Friend request already sent to this user",
   },
   common: {
     requiredFields: "Please provide all required fields",
