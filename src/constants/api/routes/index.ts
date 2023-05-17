@@ -1,14 +1,16 @@
 // Third-party dependencies
 
 // Current project dependencies
-import apiFriendRequest from "./friendRequest"
+import apiFriendRequestRoutes from "./friendRequest"
 import apiPostRoutes from "./posts"
 import apiUserRoutes from "./user"
+import apiCommentsRoutes from "./comments"
 
 const apiRoutes = {
   user: apiUserRoutes,
-  friendRequest: apiFriendRequest,
+  friendRequest: apiFriendRequestRoutes,
   post: apiPostRoutes,
+  comments: apiCommentsRoutes,
 }
 
 export default apiRoutes
