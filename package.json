@@ -12,7 +12,8 @@
     "lint": "next lint",
     "lint:fix": "eslint --fix src/**/*.{ts,tsx}",
     "lint:format": "npm run lint:fix && npm run prettier",
-    "prettier": "prettier --write {*.ts,src/**/*.{ts,tsx}}"
+    "prettier": "prettier --write {*.ts,src/**/*.{ts,tsx}}",
+    "e2e": "jest"
   },
   "dependencies": {
     "@emotion/react": "11.11.0",
