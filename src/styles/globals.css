@@ -19,3 +19,7 @@
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+.align-center {
+  align-items: center;
+}
