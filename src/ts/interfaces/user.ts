@@ -48,3 +48,8 @@ type TRegisterUserPicked = "firstname" | "lastname" | "email" | "password"
 export interface IRegisterUser extends Pick<IUser, TRegisterUserPicked> {
   confirmPassword: string
 }
+
+/**
+ * Login interface
+ */
+export interface ILoginUser extends Pick<IUser, "email" | "password"> {}
