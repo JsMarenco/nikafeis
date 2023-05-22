@@ -1,8 +1,0 @@
-{
-  "moduleFileExtensions": [
-    "ts"
-  ],
-  "rootDir": ".",
-  "testEnvironment": "node",
-  "testRegex": ".test.ts$"
-}
