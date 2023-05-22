@@ -8,21 +8,15 @@ import User from "@/models/User"
 import connectWithRetry from "@/database"
 import httpStatus from "@/constants/common/httpStatus"
 import apiMessages from "@/constants/api/messages"
-import {
-  generateJWT,
-  validateEmptyProperties,
-  validateSimpleEmail,
-} from "@/utils/basic"
-import { IUser } from "@/ts/interfaces/user"
+import { generateJWT, validateSimpleEmail } from "@/utils/basic"
+import { ILoginUser, IUser } from "@/ts/interfaces/user"
 
 const loginUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const data = JSON.parse(JSON.stringify(req.body))
-    const { email, password } = data
+    const { email, password }: ILoginUser = data
 
-    const isBodyValid = validateEmptyProperties(data)
-
-    if (!isBodyValid.success) {
+    if (!email || !password) {
       return res.status(httpStatus.badRequest.code).json({
         message: apiMessages.errors.common.requiredFields,
       })
