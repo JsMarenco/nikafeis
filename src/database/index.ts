@@ -12,7 +12,7 @@ const connectWithRetry = async () => {
     const DB_USER = process.env.DB_USER || ""
     const DB_PASSWORD = process.env.DB_PASSWORD || ""
 
-    const MONGODB_URI = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.lkzuorc.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+    const MONGODB_URI = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.yj7huxx.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
 
     const options = {
       useNewUrlParser: true,
@@ -30,8 +30,6 @@ const connectWithRetry = async () => {
     console.log("We are connected to the database!")
   } catch (error) {
     console.error("An error occurred while connecting to the database:", error)
-    // Retry the connection after a delay
-    setTimeout(connectWithRetry, 5000)
   }
 }
 
