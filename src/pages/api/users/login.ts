@@ -5,7 +5,10 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import httpStatus from "@/constants/common/httpStatus"
 import loginUser from "@/controllers/user/loginUser"
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default function loginHandler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   switch (req.method) {
     case "POST":
       loginUser(req, res)
