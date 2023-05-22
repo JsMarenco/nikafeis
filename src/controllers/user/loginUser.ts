@@ -1,7 +1,7 @@
 // Third-party dependencies
 import bcrypt from "bcrypt"
 import type { NextApiRequest, NextApiResponse } from "next"
-import { HydratedDocument } from "mongoose"
+import mongoose, { HydratedDocument } from "mongoose"
 
 // Current project dependencies
 import User from "@/models/User"
@@ -66,6 +66,8 @@ const loginUser = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(httpStatus.serverError.code).json({
       message: httpStatus.serverError.message,
     })
+  } finally {
+    mongoose.disconnect()
   }
 }
 
