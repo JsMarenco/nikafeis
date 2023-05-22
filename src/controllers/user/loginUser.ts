@@ -8,14 +8,21 @@ import User from "@/models/User"
 import connectWithRetry from "@/database"
 import httpStatus from "@/constants/common/httpStatus"
 import apiMessages from "@/constants/api/messages"
-import { generateJWT, validateSimpleEmail } from "@/utils/basic"
+import {
+  generateJWT,
+  validateEmptyProperties,
+  validateSimpleEmail,
+} from "@/utils/basic"
 import { IUser } from "@/ts/interfaces/user"
 
 const loginUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { email = "", password = "" } = req.body
+    const data = JSON.parse(JSON.stringify(req.body))
+    const { email, password } = data
 
-    if (!email || !password) {
+    const isBodyValid = validateEmptyProperties(data)
+
+    if (!isBodyValid.success) {
       return res.status(httpStatus.badRequest.code).json({
         message: apiMessages.errors.common.requiredFields,
       })
@@ -49,15 +56,15 @@ const loginUser = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const accessToken = await generateJWT(payload, "7d")
 
-    return res.status(httpStatus.ok.code).json({
+    res.status(httpStatus.ok.code).json({
       user: user,
       accessToken,
       message: apiMessages.success.authentication.login,
     })
   } catch (error) {
-    console.log("🚀 ~ file: loginUser.ts:53 ~ login ~ error:", error)
-    res.status(httpStatus.badRequest.code).json({
-      message: error,
+    console.log("🚀 ~ file: loginUser.ts:58 ~ loginUser ~ error:", error)
+    return res.status(httpStatus.serverError.code).json({
+      message: httpStatus.serverError.message,
     })
   }
 }
