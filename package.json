@@ -12,7 +12,8 @@
     "lint": "next lint",
     "lint:fix": "eslint --fix src/**/*.{ts,tsx}",
     "lint:format": "npm run lint:fix && npm run prettier",
-    "prettier": "prettier --write {*.ts,src/**/*.{ts,tsx}}"
+    "prettier": "prettier --write {*.ts,src/**/*.{ts,tsx}}",
+    "test": "jest --config ./jest.config.js --verbose"
   },
   "dependencies": {
     "@emotion/react": "11.11.0",
@@ -52,6 +53,7 @@
     "@types/supertest": "2.0.12",
     "@types/uuid": "9.0.1",
     "jest": "29.5.0",
-    "supertest": "6.3.3"
+    "supertest": "6.3.3",
+    "ts-jest": "29.1.0"
   }
 }
