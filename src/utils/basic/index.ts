@@ -62,3 +62,38 @@ export const generateJWT = async (
     throw error
   }
 }
+
+/**
+ * Validates whether the given object has empty string values for any of its properties.
+ *
+ * @param {Record<string, string>} object - The object to validate.
+ * @returns {{ success: boolean, emptyProperties: string[] }} - An object containing a boolean indicating whether any properties are empty, and an array of the names of empty properties.
+ *
+ * @example
+ * const validation = validateEmptyProperties({
+ *   firstname: "John",
+ *   lastname: "",
+ *   email: "john@example.com",
+ *   password: "",
+ *   confirmPassword: "password"
+ * })
+ *
+ * console.log(validation)
+ * // Output: { success: false, emptyProperties: ["lastname", "password"] }
+ */
+export const validateEmptyProperties = (
+  object: Record<string, string>
+): { success: boolean; emptyProperties: string[] } => {
+  const emptyProperties: string[] = []
+
+  for (const [propertyName, propertyValue] of Object.entries(object)) {
+    if (typeof propertyValue === "string" && propertyValue.trim() === "") {
+      emptyProperties.push(propertyName)
+    }
+  }
+
+  return {
+    success: emptyProperties.length === 0,
+    emptyProperties: emptyProperties,
+  }
+}
