@@ -13,7 +13,8 @@
     "lint:fix": "eslint --fix src/**/*.{ts,tsx}",
     "lint:format": "npm run lint:fix && npm run prettier",
     "prettier": "prettier --write {*.ts,src/**/*.{ts,tsx}}",
-    "test": "jest --config ./jest.config.js"
+    "test": "jest --config ./jest.config.js --maxWorkers=1",
+    "test:silent": "jest --config ./jest.config.js --maxWorkers=1 --silent"
   },
   "dependencies": {
     "@emotion/react": "11.11.0",
