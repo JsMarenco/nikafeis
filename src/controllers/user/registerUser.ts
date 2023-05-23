@@ -1,35 +1,31 @@
 // Third-party dependencies
-import type { NextApiRequest, NextApiResponse } from "next"
-import { HydratedDocument } from "mongoose"
+import { NextApiRequest, NextApiResponse } from "next"
+import mongoose, { HydratedDocument } from "mongoose"
 import bcrypt from "bcrypt"
 
 // Current project dependencies
 import httpStatus from "@/constants/common/httpStatus"
 import apiMessages from "@/constants/api/messages"
 import User from "@/models/User"
-import { IUser } from "@/ts/interfaces/user"
+import { IRegisterUser, IUser } from "@/ts/interfaces/user"
 import { generateUsername, validateSimpleEmail } from "@/utils/basic"
+import connectWithRetry from "@/database"
 
-const MIN_PASSWORD_LENGTH = 8
-const MAX_PASSWORD_LENGTH = 80
+export const MIN_PASSWORD_LENGTH = 8
+export const MAX_PASSWORD_LENGTH = 80
 
 const registerUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    const data = JSON.parse(JSON.stringify(req.body))
     const {
-      firstname = "",
       email = "",
       password = "",
-      passwordConfirmation = "",
+      confirmPassword = "",
+      firstname = "",
       lastname = "",
-    } = req.body
+    }: IRegisterUser = data
 
-    if (
-      !firstname ||
-      !email ||
-      !password ||
-      !passwordConfirmation ||
-      !lastname
-    ) {
+    if (!email || !password || !confirmPassword || !firstname || !lastname) {
       return res.status(httpStatus.badRequest.code).json({
         message: apiMessages.errors.common.requiredFields,
       })
@@ -49,7 +45,7 @@ const registerUser = async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    if (password !== passwordConfirmation) {
+    if (password !== confirmPassword) {
       return res.status(httpStatus.badRequest.code).json({
         message: apiMessages.errors.password.passwordsDoNotMatch,
       })
@@ -60,6 +56,8 @@ const registerUser = async (req: NextApiRequest, res: NextApiResponse) => {
         message: apiMessages.errors.authentication.invalidEmail,
       })
     }
+
+    await connectWithRetry()
 
     // checkif user already exists
     const user = await User.findOne({ email })
@@ -73,13 +71,13 @@ const registerUser = async (req: NextApiRequest, res: NextApiResponse) => {
     // encrypt password
     const passwordHash = await bcrypt.hash(password, 10)
 
-    const newUser: HydratedDocument<IUser> = new User({
-      firstname,
-      lastname,
-      email,
+    const obj: Omit<IRegisterUser, "confirmPassword"> = {
+      ...data,
       password: passwordHash,
       username: generateUsername(),
-    })
+    }
+
+    const newUser: HydratedDocument<IUser> = new User(obj)
 
     await newUser.save()
 
@@ -88,9 +86,12 @@ const registerUser = async (req: NextApiRequest, res: NextApiResponse) => {
       message: apiMessages.success.user.created,
     })
   } catch (error: any) {
+    console.log("🚀 ~ file: registerUser.ts:94 ~ registerUser ~ error:", error)
     res.status(httpStatus.serverError.code).json({
       message: httpStatus.serverError.message,
     })
+  } finally {
+    mongoose.disconnect()
   }
 }
 
