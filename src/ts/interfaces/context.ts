@@ -11,3 +11,11 @@ import { ReactNode } from "react"
 export interface IContextChildrenProps {
   children: ReactNode
 }
+
+/**
+ * App Theme Context interface
+ */
+export interface IAppThemeContext {
+  handleChangeThemeApp: () => void
+  currentThemeName: string
+}
