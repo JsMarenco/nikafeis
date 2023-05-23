@@ -33,14 +33,32 @@ const connectWithRetry = async () => {
   }
 }
 
-// Only connect to the database if not already connected
-if (connection.readyState === 0) {
-  connectWithRetry()
-}
-
 // Handle connection errors
 connection.on("error", (err) => {
   console.error("An error occurred with the database connection:", err)
 })
+
+/**
+ * @function emptyDatabase
+ * @async
+ * @description Empties the MongoDB database by dropping all collections
+ */
+export const emptyDatabase = async () => {
+  try {
+    await connectWithRetry()
+    const collections = connection.collections
+
+    for (const key in collections) {
+      const collection = collections[key]
+      await collection.deleteMany({})
+    }
+
+    console.log("Successfully emptied the database!")
+  } catch (error) {
+    console.error("An error occurred while emptying the database:", error)
+  } finally {
+    connection.close()
+  }
+}
 
 export default connectWithRetry
