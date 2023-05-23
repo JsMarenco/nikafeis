@@ -7,7 +7,12 @@ import "@fontsource/roboto/700.css"
 
 // Current project dependenciesl
 import "@/styles/globals.css"
+import { AppGlobalContext } from "@/context/AppGlobalContext"
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <AppGlobalContext>
+      <Component {...pageProps} />
+    </AppGlobalContext>
+  )
 }
