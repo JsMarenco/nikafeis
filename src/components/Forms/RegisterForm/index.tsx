@@ -5,6 +5,8 @@ import { Button, Icon, Stack, TextField } from "@mui/material"
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
+import PersonIcon from "@mui/icons-material/Person"
+import { useRouter } from "next/router"
 
 // Current project dependenciesl
 import { AppMessageContext } from "@/context/AppMessageContext"
@@ -12,6 +14,7 @@ import httpStatus from "@/constants/common/httpStatus"
 import { IRegisterUser } from "@/ts/interfaces/user"
 import registerService from "@/services/user/registerService"
 import { registerFormInputs } from "./inputs"
+import appRoutes from "@/constants/app/routes"
 
 export default function RegisterForm() {
   const [registerInfo, setRegisterInfo] = useState<IRegisterUser>({
@@ -24,6 +27,7 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const { handleMessage } = useContext(AppMessageContext)
+  const router = useRouter()
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -35,10 +39,9 @@ export default function RegisterForm() {
     setLoading(true)
     const { message, status } = await registerService(registerInfo)
 
-    // TODO: Add the distpach here to save the user info
-
     if (status === httpStatus.created.code) {
       handleMessage(message)
+      router.push(appRoutes.auth.login)
     }
 
     if (status === httpStatus.badRequest.code) {
@@ -71,7 +74,7 @@ export default function RegisterForm() {
           InputProps={{
             startAdornment: (
               <Icon sx={{ mr: 2 }}>
-                <EmailOutlinedIcon />
+                <PersonIcon />
               </Icon>
             ),
           }}
@@ -92,7 +95,7 @@ export default function RegisterForm() {
           InputProps={{
             startAdornment: (
               <Icon sx={{ mr: 2 }}>
-                <EmailOutlinedIcon />
+                <PersonIcon />
               </Icon>
             ),
           }}
@@ -179,7 +182,7 @@ export default function RegisterForm() {
         onClick={handleSubmit}
         disabled={loading}
       >
-        Login
+        Register
       </Button>
     </>
   )
