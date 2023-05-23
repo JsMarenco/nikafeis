@@ -2,6 +2,7 @@
 
 // Current project dependencies
 import { IAccountInfo } from "./user/accountInfo"
+import { IAuth } from "./user/auth"
 import { IPersonalInfo } from "./user/personalInfo"
 import { IProfileInfo } from "./user/profileInfo"
 import { IRelationships } from "./user/relationships"
@@ -17,7 +18,8 @@ export interface IUser
     IProfileInfo,
     IRelationships,
     ISocialMediaLinks,
-    ITimestamps {}
+    ITimestamps,
+    IAuth {}
 
 /**
  * User projection for populating fields.
