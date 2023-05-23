@@ -6,6 +6,7 @@ import { IInitialUserState } from "@/ts/interfaces/states/states"
 const initialUserState: IInitialUserState = {
   auth: {
     accessToken: "",
+    isLogged: false,
   },
 
   personalInfo: {
