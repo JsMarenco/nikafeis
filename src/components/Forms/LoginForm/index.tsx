@@ -13,6 +13,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined"
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined"
 import Link from "next/link"
+import { useDispatch } from "react-redux"
+import { useRouter } from "next/router"
 
 // Current project dependenciesl
 import { loginFormInputs } from "./inputs"
@@ -21,6 +23,7 @@ import loginService from "@/services/user/loginService"
 import { AppMessageContext } from "@/context/AppMessageContext"
 import httpStatus from "@/constants/common/httpStatus"
 import appRoutes from "@/constants/app/routes"
+import { setUser } from "@/app/slices/user"
 
 export default function LoginForm() {
   const [loginInfo, setLoginInfo] = useState<ILoginUser>({
@@ -30,6 +33,8 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const { handleMessage } = useContext(AppMessageContext)
+  const dispatch = useDispatch()
+  const router = useRouter()
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -39,12 +44,12 @@ export default function LoginForm() {
 
   const handleSubmit = async () => {
     setLoading(true)
-    const { message, status } = await loginService(loginInfo)
-
-    // TODO: Add the distpach here to save the user info
+    const { body, message, status } = await loginService(loginInfo)
 
     if (status === httpStatus.ok.code) {
+      dispatch(setUser({ ...body.user, accessToken: body.accessToken }))
       handleMessage(message)
+      router.push(appRoutes.home)
     }
 
     if (status === httpStatus.badRequest.code) {
