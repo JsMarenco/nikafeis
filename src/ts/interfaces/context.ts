@@ -19,3 +19,10 @@ export interface IAppThemeContext {
   handleChangeThemeApp: () => void
   currentThemeName: string
 }
+
+/**
+ * Message Context Interface
+ */
+export interface IMessageContext {
+  handleMessage: (message: string) => void
+}
