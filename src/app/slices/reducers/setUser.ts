@@ -11,7 +11,7 @@ const setUserReducer: CaseReducer<IInitialUserState, PayloadAction<IUser>> = (
 ) => {
   const { ...userProps } = action.payload
 
-  state.auth = { ...userProps }
+  state.auth = { ...userProps, isLogged: true }
   state.personalInfo = { ...userProps }
   state.accountInfo = { ...userProps }
   state.socialMediaLinks = { ...userProps }
