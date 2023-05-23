@@ -9,3 +9,8 @@ export interface CustomMenuItemProps {
   label: string
   link: string
 }
+
+export interface CustomMenuProps {
+  items: CustomMenuItemProps[]
+  label: string
+}
