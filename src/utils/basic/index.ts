@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid"
 import jwt from "jsonwebtoken"
 
 // Current project dependencies
+import { IUserTokenPayload } from "@/ts/interfaces/user"
 
 /**
  * Validates a simple email format.
@@ -41,12 +42,12 @@ export const generateUsername = (): string => {
 /**
  * Generates a JWT (JSON Web Token).
  *
- * @param {object} payload - The payload object to include in the JWT.
+ * @param {IUserTokenPayload} payload - The payload object to include in the JWT.
  * @param {string} expiresIn - The duration of the JWT (e.g., "1h", "2d", "30m").
  * @returns {Promise<string>} A promise that resolves to the generated JWT.
  */
 export const generateJWT = async (
-  payload: object,
+  payload: IUserTokenPayload,
   expiresIn: string
 ): Promise<string> => {
   try {
