@@ -44,3 +44,8 @@ export interface IRegisterUser extends Pick<IUser, TRegisterUserPicked> {
  * Login interface
  */
 export interface ILoginUser extends Pick<IUser, "email" | "password"> {}
+
+/**
+ * User Token payload
+ */
+export interface IUserTokenPayload extends Pick<IUser, "email" | "id"> {}
