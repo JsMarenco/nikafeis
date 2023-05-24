@@ -12,13 +12,14 @@ import { apiResolver } from "next/dist/server/api-utils/node"
  * @returns {import("supertest").SuperTest<import("supertest").Test>} - The test client instance.
  */
 const testClient = (
-  handler: NextApiHandler
+  handler: NextApiHandler,
+  query?: object
 ): import("supertest").SuperTest<import("supertest").Test> => {
   const listener: RequestListener = (req, res) => {
     return apiResolver(
       req,
       res,
-      undefined,
+      query,
       handler,
       {
         previewModeEncryptionKey: "",
