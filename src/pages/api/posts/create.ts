@@ -5,7 +5,10 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import httpStatus from "@/constants/common/httpStatus"
 import createPost from "@/controllers/post/createPost"
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default function createPostHandler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   switch (req.method) {
     case "POST":
       createPost(req, res)
