@@ -44,11 +44,13 @@ const loginUser = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const payload = {
-      userId: user.id,
-      userEmail: user.email,
+      id: user.id,
+      email: user.email,
     }
 
     const accessToken = await generateJWT(payload, "7d")
+
+    user.password = ""
 
     res.status(httpStatus.ok.code).json({
       user: user,
