@@ -16,9 +16,10 @@ const authentication = async (
 ) => {
   try {
     const data = JSON.parse(JSON.stringify(req.headers))
-    const { Authorization = "" } = data
+    const { authorization = "" } = data
+    console.log("🚀 ~ file: authentication.ts:20 ~ data:", data)
 
-    const token: string = Authorization.split(" ")[1]
+    const token: string = authorization.split(" ")[1]
 
     if (!token) {
       return res.status(httpStatus.badRequest.code).json({
