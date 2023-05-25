@@ -17,7 +17,6 @@ const authentication = async (
   try {
     const data = JSON.parse(JSON.stringify(req.headers))
     const { authorization = "" } = data
-    console.log("🚀 ~ file: authentication.ts:20 ~ data:", data)
 
     const token: string = authorization.split(" ")[1]
 
