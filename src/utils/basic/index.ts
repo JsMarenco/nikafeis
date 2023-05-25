@@ -98,3 +98,21 @@ export const validateEmptyProperties = (
     emptyProperties: emptyProperties,
   }
 }
+
+/**
+ * Decodes a JWT (JSON Web Token).
+ *
+ * @param {string} token - The JWT to decode.
+ */
+export const decodeJWT = (token: string) => {
+  try {
+    const secret = process.env.JWT_SECRET || "secret"
+
+    const decoded = jwt.verify(token, secret)
+
+    return decoded
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
