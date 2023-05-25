@@ -35,3 +35,5 @@ export const wrongId = "wrong-id"
 export const wrongEmail = "wrong-email"
 export const wrongPassword = "wrong-password"
 export const documentId = "646e88c5a85a16084f1584b3"
+
+export const testMessage = (message: string) => `Should return "${message}"`
