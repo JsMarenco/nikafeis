@@ -69,7 +69,7 @@ beforeEach(async () => {
 
 describe("/api/posts/create", () => {
   test(`Should throw ${success.post.created}`, async () => {
-    const headers = { Authorization: `Bearer ${userLoggedInfo.accessToken}` }
+    const headers = { authorization: `Bearer ${userLoggedInfo.accessToken}` }
     client = testClient(
       createPostHandler,
       { userId: userLoggedInfo.id },
@@ -87,7 +87,7 @@ describe("/api/posts/create", () => {
   })
 
   test(`Should throw ${errors.common.requiredFields}`, async () => {
-    const headers = { Authorization: `Bearer ${userLoggedInfo.accessToken}` }
+    const headers = { authorization: `Bearer ${userLoggedInfo.accessToken}` }
     client = testClient(
       createPostHandler,
       { userId: userLoggedInfo.id },
@@ -123,7 +123,7 @@ describe("/api/posts/create", () => {
   })
 
   test(`Should throw ${errors.user.userNotFound}`, async () => {
-    const headers = { Authorization: `Bearer ${userLoggedInfo.accessToken}` }
+    const headers = { authorization: `Bearer ${userLoggedInfo.accessToken}` }
     client = testClient(createPostHandler, { userId: documentId }, headers)
 
     await client
@@ -137,7 +137,7 @@ describe("/api/posts/create", () => {
   })
 
   test(`Should throw ${errors.authentication.invalidId}`, async () => {
-    const headers = { Authorization: `Bearer ${userLoggedInfo.accessToken}` }
+    const headers = { authorization: `Bearer ${userLoggedInfo.accessToken}` }
     client = testClient(createPostHandler, { userId: wrongId }, headers)
 
     await client

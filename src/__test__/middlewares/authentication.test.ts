@@ -75,7 +75,7 @@ describe("Authentication middleware", () => {
     // Mock the request and response objects
     const req = {
       headers: {
-        Authorization: `Bearer ${userLoggedInfo.accessToken}`,
+        authorization: `Bearer ${userLoggedInfo.accessToken}`,
       },
     } as unknown as NextApiRequest
 
@@ -123,7 +123,7 @@ describe("Authentication middleware", () => {
 
     const req = {
       headers: {
-        Authorization: `Bearer ${tokenWithWrongId}`,
+        authorization: `Bearer ${tokenWithWrongId}`,
       },
     } as unknown as NextApiRequest
 
@@ -146,7 +146,7 @@ describe("Authentication middleware", () => {
   test(testMessage(errors.authentication.invalidToken), async () => {
     const req = {
       headers: {
-        Authorization: "Bearer my_token",
+        authorization: "Bearer my_token",
       },
     } as unknown as NextApiRequest
 
@@ -176,7 +176,7 @@ describe("Authentication middleware", () => {
 
     const req = {
       headers: {
-        Authorization: `Bearer ${tokenWithWrongId}`,
+        authorization: `Bearer ${tokenWithWrongId}`,
       },
     } as unknown as NextApiRequest
 
@@ -206,7 +206,7 @@ describe("Authentication middleware", () => {
 
     const req = {
       headers: {
-        Authorization: `Bearer ${tokenWithWrongId}`,
+        authorization: `Bearer ${tokenWithWrongId}`,
       },
     } as unknown as NextApiRequest
 
