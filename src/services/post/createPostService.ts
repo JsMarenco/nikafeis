@@ -15,7 +15,7 @@ const createPostService = async (
   try {
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     }
 
