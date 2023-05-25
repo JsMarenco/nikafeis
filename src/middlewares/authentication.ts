@@ -7,7 +7,6 @@ import httpStatus from "@/constants/common/httpStatus"
 import apiMessages from "@/constants/api/messages"
 import { decodeJWT } from "@/utils/basic"
 import User from "@/models/User"
-import mongoose from "mongoose"
 import connectWithRetry from "@/database"
 
 const authentication = async (
@@ -41,7 +40,7 @@ const authentication = async (
       })
     }
 
-    return handler(req, res)
+    handler(req, res)
   } catch (error: any) {
     switch (error.name) {
       case "JsonWebTokenError":
@@ -67,8 +66,6 @@ const authentication = async (
           message: httpStatus.serverError.message,
         })
     }
-  } finally {
-    mongoose.disconnect()
   }
 }
 
