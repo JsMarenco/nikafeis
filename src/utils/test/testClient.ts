@@ -13,9 +13,16 @@ import { apiResolver } from "next/dist/server/api-utils/node"
  */
 const testClient = (
   handler: NextApiHandler,
-  query?: object
+  query?: object,
+  headers?: object
 ): import("supertest").SuperTest<import("supertest").Test> => {
   const listener: RequestListener = (req, res) => {
+    // Set the headers on the request
+    req.headers = {
+      ...req.headers,
+      ...headers,
+    }
+
     return apiResolver(
       req,
       res,
