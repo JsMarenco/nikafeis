@@ -26,12 +26,10 @@ const UserSchema = new Schema<IUser>(
     firstname: {
       type: String,
       minlength: 1,
-      maxlength: 15,
     },
     lastname: {
       type: String,
       minlength: 1,
-      maxlength: 15,
     },
     description: {
       type: String,
