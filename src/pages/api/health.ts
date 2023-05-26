@@ -5,7 +5,10 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import httpStatus from "@/constants/common/httpStatus"
 import health from "@/controllers/health"
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default function healthHandler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   switch (req.method) {
     case "GET":
       health(req, res)
