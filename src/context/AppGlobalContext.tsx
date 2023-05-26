@@ -7,6 +7,7 @@ import { AppMessageContextProvider } from "./AppMessageContext"
 import { IContextChildrenProps } from "@/ts/interfaces/context"
 import { AppThemeContextProvider } from "./AppThemeContext"
 import { store } from "@/app/store"
+import Auth from "@/components/Auth"
 
 /**
  * App Global context, wrap all the contexts provider
@@ -19,7 +20,9 @@ export const AppGlobalContext = (props: IContextChildrenProps) => {
       <Provider store={store}>
         <SnackbarProvider maxSnack={3} style={{ backgroundColor: "black" }}>
           <AppMessageContextProvider>
-            <AppThemeContextProvider>{props.children}</AppThemeContextProvider>
+            <AppThemeContextProvider>
+              <Auth>{props.children}</Auth>
+            </AppThemeContextProvider>
           </AppMessageContextProvider>
         </SnackbarProvider>
       </Provider>
