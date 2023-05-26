@@ -31,6 +31,14 @@ export const userProjection = {
   avatarUrl: 1,
 }
 
+type IUserInfoPicked =
+  | "id"
+  | "firstname"
+  | "lastname"
+  | "avatarUrl"
+  | "username"
+export interface IBasicUserInfo extends Pick<IUser, IUserInfoPicked> {}
+
 /**
  * Register user type
  */
