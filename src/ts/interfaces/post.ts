@@ -9,7 +9,7 @@ import { IBasicUserInfo } from "./user"
  * Interface representing a post.
  */
 export interface IPost {
-  id?: string
+  id: string
   title: string
   content: string
   views: number
