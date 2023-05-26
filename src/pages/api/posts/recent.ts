@@ -5,7 +5,10 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import httpStatus from "@/constants/common/httpStatus"
 import getRecentPosts from "@/controllers/post/getRecentPosts"
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default function recentPostsHandler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   switch (req.method) {
     case "GET":
       getRecentPosts(req, res)
