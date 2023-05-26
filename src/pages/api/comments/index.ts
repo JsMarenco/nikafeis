@@ -4,11 +4,15 @@ import type { NextApiRequest, NextApiResponse } from "next"
 // Current project dependencies
 import httpStatus from "@/constants/common/httpStatus"
 import createComment from "@/controllers/comment/createComment"
+import authentication from "@/middlewares/authentication"
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default function createCommentHandler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   switch (req.method) {
     case "POST":
-      createComment(req, res)
+      authentication(req, res, createComment)
       break
 
     default:
