@@ -116,3 +116,8 @@ export const decodeJWT = (token: string) => {
     throw error
   }
 }
+
+/**
+ * This animation type will be applied to all skeletons
+ */
+export const skeletonAnimation: "pulse" | "wave" = "wave"
