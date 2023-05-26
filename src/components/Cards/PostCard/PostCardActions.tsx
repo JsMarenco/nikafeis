@@ -5,9 +5,11 @@ import { CardActions, Button, useMediaQuery } from "@mui/material"
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import CommentIcon from "@mui/icons-material/Comment"
 import ShareIcon from "@mui/icons-material/Share"
-import { IPostWithPopulated } from "@/ts/interfaces/post"
+import { useSelector } from "react-redux"
+import { RootState } from "@/app/store"
 
 // Current project dependencies
+import { IPostWithPopulated } from "@/ts/interfaces/post"
 
 interface PostCardActionsProps
   extends Pick<IPostWithPopulated, "likes" | "comments" | "shares"> {
@@ -24,6 +26,8 @@ export default function PostCardActions({
   comments,
   shares,
 }: PostCardActionsProps) {
+  const { accountInfo } = useSelector((state: RootState) => state.user)
+
   return (
     <CardActions
       sx={{
@@ -35,7 +39,11 @@ export default function PostCardActions({
     >
       <ActionButton
         handleOnClick={handleLike}
-        icon={<FavoriteIcon />}
+        icon={
+          <FavoriteIcon
+            color={likes.includes(accountInfo.id) ? "secondary" : "primary"}
+          />
+        }
         label={`${likes.length} Likes`}
       />
 
