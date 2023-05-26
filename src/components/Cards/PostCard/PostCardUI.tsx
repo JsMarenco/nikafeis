@@ -21,6 +21,9 @@ export default function PostCardUI({
   handleLike,
   handleOpenCommentsMenu,
   handleSharePost,
+  likes,
+  comments,
+  shares,
 }: PostCardUIProps) {
   return (
     <Card
@@ -45,6 +48,9 @@ export default function PostCardUI({
         handleLike={handleLike}
         handleOpenCommentsMenu={handleOpenCommentsMenu}
         handleSharePost={handleSharePost}
+        likes={likes}
+        comments={comments}
+        shares={shares}
       />
     </Card>
   )
