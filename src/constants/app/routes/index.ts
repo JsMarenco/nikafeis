@@ -4,12 +4,16 @@ const appRoutes = {
     register: "/register",
     forgotPassword: "/forgot-password",
   },
-  home: "/home",
   settings: {
     general: "/settings",
     profile: "/settings/profile",
     account: "/settings/account",
     privacy: "/settings/privacy",
+  },
+  home: "/home",
+  notFound: "/404",
+  profile: {
+    view: (username: string) => `/p/${username}`,
   },
 }
 
