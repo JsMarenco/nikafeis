@@ -11,6 +11,7 @@ const errorMessages = {
     invalidToken: "Invalid token",
     jwtExpired: "JWT has expired",
     unauthorized: "You are not authorized to perform this action",
+    tokenRequired: "Token is required",
   },
   user: {
     userNotFound: "User not found",
