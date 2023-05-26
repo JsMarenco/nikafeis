@@ -1,5 +1,6 @@
 // Third-party dependencies
 import type { NextApiRequest, NextApiResponse } from "next"
+import mongoose, { HydratedDocument } from "mongoose"
 
 // Current project dependencies
 import httpStatus from "@/constants/common/httpStatus"
@@ -7,7 +8,6 @@ import apiMessages from "@/constants/api/messages"
 import Post from "@/models/Post"
 import User from "@/models/User"
 import { IPost } from "@/ts/interfaces/post"
-import { HydratedDocument } from "mongoose"
 import { IUser } from "@/ts/interfaces/user"
 
 const updateLikes = async (
@@ -50,8 +50,6 @@ const likePost = async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    // TODO: Add token validation
-
     const liked = post.likes.includes(user.id)
 
     const updatedPost = await updateLikes(post.id, user.id, liked)
@@ -78,6 +76,8 @@ const likePost = async (req: NextApiRequest, res: NextApiResponse) => {
         })
         break
     }
+  } finally {
+    mongoose.disconnect()
   }
 }
 
