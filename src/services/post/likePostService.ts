@@ -7,24 +7,25 @@ import { IGlobalApiResponse } from "@/ts/interfaces/api"
 import apiRoutes from "@/constants/api/routes"
 
 const likePostService = async (
+  postId: string,
   userId: string,
-  token: string,
-  postId: string
+  token: string
 ) => {
   try {
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     }
 
-    const { data, status } = await axios.post(
+    const { data, status } = await axios.put(
       apiRoutes.post.like(postId, userId),
+      {},
       config
     )
 
     const newResponse: IGlobalApiResponse = {
-      body: data,
+      body: data.post,
       message: data.message,
       status: status,
       success: true,
