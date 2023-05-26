@@ -41,14 +41,6 @@ const getRecentPosts = async (req: NextApiRequest, res: NextApiResponse) => {
         path: "author",
         select: userProjection,
       })
-      .populate({
-        path: "likes",
-        select: userProjection,
-      })
-      .populate({
-        path: "shares",
-        select: userProjection,
-      })
       .limit(limitValue)
       .skip(offsetValue)
 
