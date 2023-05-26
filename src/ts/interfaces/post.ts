@@ -1,5 +1,7 @@
 // Third-party dependencies
+
 import { Schema } from "mongoose"
+import { IBasicUserInfo } from "./user"
 
 // Current project dependencies
 
@@ -12,13 +14,21 @@ export interface IPost {
   content: string
   views: number
   shares: number
-  comments: Schema.Types.ObjectId[] | string[]
-  likes: Schema.Types.ObjectId[] | string[]
-  reports: Schema.Types.ObjectId[] | string[]
+  comments: string[]
+  likes: string[]
+  reports: string[]
   postImages: string[]
   author: Schema.Types.ObjectId
-  createdAt: Date
-  updatedAt: Date
+  createdAt: string
+  updatedAt: string
+}
+
+type IPostWithPopulatedPicked = "comments" | "author"
+
+export interface IPostWithPopulated
+  extends Omit<IPost, IPostWithPopulatedPicked> {
+  author: IBasicUserInfo
+  comments: IBasicUserInfo[]
 }
 
 type TUpdatePostOmit = Omit<IPost, "id" | "updatedAt" | "createdAt">
