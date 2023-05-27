@@ -1,6 +1,6 @@
 // Third-party dependencies
 import type { NextApiRequest, NextApiResponse } from "next"
-import { HydratedDocument } from "mongoose"
+import mongoose, { HydratedDocument } from "mongoose"
 
 // Current project dependencies
 import httpStatus from "@/constants/common/httpStatus"
@@ -14,16 +14,18 @@ import { IPost } from "@/ts/interfaces/post"
 import { IUser } from "@/ts/interfaces/user"
 
 const createComment = async (req: NextApiRequest, res: NextApiResponse) => {
-  await connectWithRetry()
-
   try {
-    const { postId = "", content = "", userId = "" } = req.body
+    const data = JSON.parse(JSON.stringify(req.body))
+    const { content = "" } = data
+    const { postId = "", userId = "" } = req.query
 
     if (!postId || !content || !userId) {
       return res.status(httpStatus.badRequest.code).json({
         message: apiMessages.errors.common.requiredFields,
       })
     }
+
+    await connectWithRetry()
 
     const post: IPost | null = await Post.findById(postId)
 
@@ -52,8 +54,8 @@ const createComment = async (req: NextApiRequest, res: NextApiResponse) => {
     await comment.save()
 
     res.status(httpStatus.created.code).json({
-      message: apiMessages.success.comment.created,
       comment,
+      message: apiMessages.success.comment.created,
     })
   } catch (error: any) {
     switch (error.name) {
@@ -69,6 +71,8 @@ const createComment = async (req: NextApiRequest, res: NextApiResponse) => {
         })
         break
     }
+  } finally {
+    mongoose.disconnect()
   }
 }
 
