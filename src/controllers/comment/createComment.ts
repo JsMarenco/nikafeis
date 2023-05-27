@@ -27,7 +27,7 @@ const createComment = async (req: NextApiRequest, res: NextApiResponse) => {
 
     await connectWithRetry()
 
-    const post: IPost | null = await Post.findById(postId)
+    const post: HydratedDocument<IPost> | null = await Post.findById(postId)
 
     if (!post) {
       return res.status(httpStatus.notFound.code).json({
@@ -35,7 +35,7 @@ const createComment = async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    const user: IUser | null = await User.findById(userId)
+    const user: HydratedDocument<IUser> | null = await User.findById(userId)
 
     if (!user) {
       return res.status(httpStatus.notFound.code).json({
@@ -52,6 +52,8 @@ const createComment = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Save the comment to the database
     await comment.save()
+
+    await Post.updateOne({ _id: post.id }, { $push: { comments: comment.id } })
 
     res.status(httpStatus.created.code).json({
       comment,
