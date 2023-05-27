@@ -1,6 +1,7 @@
 // Third-party dependencies
 
 // Current project dependencies
+import { ICreateComment } from "@/ts/interfaces/comment"
 import { ICreatePost } from "@/ts/interfaces/post"
 import { ILoginUser, IRegisterUser } from "@/ts/interfaces/user"
 
@@ -29,6 +30,13 @@ export const loginUserPayload: ILoginUser = {
 export const createPostPayload: ICreatePost = {
   title: "laboriosam non velit",
   content: "Dignissimos consequatur mollitia.",
+}
+
+/**
+ * This is a fake payload for create a comment
+ */
+export const createCommentPayload: ICreateComment = {
+  content: "Id repudiandae dolorum facere quidem.",
 }
 
 export const wrongId = "wrong-id"
