@@ -50,8 +50,8 @@ const errorMessages = {
   common: {
     requiredFields: "Please provide all required fields",
     limitOffset: "Limit and offset cannot be empty",
-    offsetMustBeNumber: "Offset param should be a number",
-    limitMustBeNumber: "Limit param should be a number",
+    offsetMustBeNumber: "Offset param should be a positive number",
+    limitMustBeNumber: "Limit param should be a positive number",
     commentNotFound: "Comment not found",
     internalServerError:
       "An error occurred while processing your request. Please try again later.",
