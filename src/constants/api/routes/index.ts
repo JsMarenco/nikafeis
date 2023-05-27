@@ -10,7 +10,7 @@ const apiRoutes = {
   user: apiUserRoutes,
   friendRequest: apiFriendRequestRoutes,
   post: apiPostRoutes,
-  comments: apiCommentsRoutes,
+  comment: apiCommentsRoutes,
 }
 
 export default apiRoutes
