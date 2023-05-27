@@ -1,4 +1,5 @@
 // Third-party dependencies
+import mongoose from "mongoose"
 
 // Current project dependencies
 import apiMessages from "@/constants/api/messages"
@@ -50,6 +51,10 @@ beforeEach(async () => {
   )
 })
 
+afterAll(async () => {
+  mongoose.disconnect()
+})
+
 describe("/api/comments/list", () => {
   test(testMessage("An array of posts"), async () => {
     const query = { offset: 0, limit: 5, postId: postWithComments.id }
@@ -60,7 +65,8 @@ describe("/api/comments/list", () => {
       .expect(httpStatus.ok.code)
       .expect("Content-Type", /application\/json/)
       .expect((res) => {
-        expect(res.body).toHaveLength(query.limit)
+        expect(JSON.parse(res.text).comments).toHaveLength(query.limit)
+        expect(JSON.parse(res.text).hasNextPage).toBeTruthy()
       })
   })
 
