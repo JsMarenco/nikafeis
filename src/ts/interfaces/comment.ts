@@ -7,11 +7,16 @@ import { Schema } from "mongoose"
  * Interface representing a comment.
  */
 export interface IComment {
-  id?: string
+  id: string
   content: string
-  likes: Array<Schema.Types.ObjectId | string>
-  author: Schema.Types.ObjectId | string
-  post: Schema.Types.ObjectId | string
+  likes: string[]
+  author: Schema.Types.ObjectId
+  post: Schema.Types.ObjectId
   createdAt: Date
   updatedAt: Date
 }
+
+/**
+ * Create comment
+ */
+export interface ICreateComment extends Pick<IComment, "content"> {}
