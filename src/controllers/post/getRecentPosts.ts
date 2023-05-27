@@ -1,6 +1,5 @@
 // Third-party dependencies
 import type { NextApiRequest, NextApiResponse } from "next"
-import mongoose from "mongoose"
 
 // Current project dependencies
 import httpStatus from "@/constants/common/httpStatus"
@@ -44,17 +43,22 @@ const getRecentPosts = async (req: NextApiRequest, res: NextApiResponse) => {
       .limit(limitValue)
       .skip(offsetValue)
 
-    res.status(httpStatus.ok.code).json(posts.reverse())
+    const postsLength = await Post.countDocuments()
+
+    const hasNextPage = offsetValue + limitValue < postsLength
+
+    return res.status(httpStatus.ok.code).json({
+      posts: posts.reverse(),
+      hasNextPage,
+    })
   } catch (error) {
     console.log(
       "🚀 ~ file: getRecentPosts.ts:56 ~ getRecentPosts ~ error:",
       error
     )
-    res.status(httpStatus.serverError.code).json({
+    return res.status(httpStatus.serverError.code).json({
       message: httpStatus.serverError.message,
     })
-  } finally {
-    mongoose.disconnect()
   }
 }
 
