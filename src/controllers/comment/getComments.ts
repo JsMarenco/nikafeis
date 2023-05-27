@@ -1,6 +1,6 @@
 // Third-party dependencies
 import type { NextApiRequest, NextApiResponse } from "next"
-import mongoose, { HydratedDocument } from "mongoose"
+import { HydratedDocument } from "mongoose"
 
 // Current project dependencies
 import httpStatus from "@/constants/common/httpStatus"
@@ -57,23 +57,30 @@ const getComments = async (req: NextApiRequest, res: NextApiResponse) => {
       .limit(limitValue)
       .skip(offsetValue)
 
-    res.status(httpStatus.ok.code).json(comments)
+    const commentsLength = await Comment.countDocuments({
+      post: postId,
+    })
+
+    const hasNextPage = offsetValue + limitValue < commentsLength
+
+    return res.status(httpStatus.ok.code).json({
+      comments,
+      hasNextPage,
+    })
   } catch (error: any) {
+    console.log("🚀 ~ file: getComments.ts:71 ~ getComments ~ error:", error)
+
     switch (error.name) {
       case "CastError":
-        res.status(httpStatus.badRequest.code).send({
+        return res.status(httpStatus.badRequest.code).json({
           message: apiMessages.errors.authentication.invalidId,
         })
-        break
 
       default:
-        res.status(httpStatus.serverError.code).json({
+        return res.status(httpStatus.serverError.code).json({
           message: httpStatus.serverError.message,
         })
-        break
     }
-  } finally {
-    mongoose.disconnect()
   }
 }
 
