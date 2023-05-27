@@ -2,6 +2,7 @@
 import { Schema } from "mongoose"
 
 // Current project dependencies
+import { IBasicUserInfo } from "./user"
 
 /**
  * Interface representing a comment.
@@ -14,6 +15,14 @@ export interface IComment {
   post: Schema.Types.ObjectId
   createdAt: Date
   updatedAt: Date
+}
+
+/**
+ * Comment interface populated
+ */
+
+export interface ICommentWithPopulated extends Omit<IComment, "author"> {
+  author: IBasicUserInfo
 }
 
 /**
