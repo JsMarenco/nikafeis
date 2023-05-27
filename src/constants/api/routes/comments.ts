@@ -2,7 +2,7 @@ const baseUrl = "/api/comments"
 
 const apiCommentsRoutes = {
   create: (postId: string, userId: string) =>
-    `${baseUrl}?postId=${postId}&userId=${userId}`,
+    `${baseUrl}/create?postId=${postId}&userId=${userId}`,
 
   update: (commentId: string, userId: string) =>
     `${baseUrl}/${commentId}?userId=${userId}`,
