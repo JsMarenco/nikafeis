@@ -50,7 +50,8 @@ describe("/api/posts/recent", () => {
       .expect(httpStatus.ok.code)
       .expect("Content-Type", /application\/json/)
       .expect((res) => {
-        expect(res.body).toHaveLength(query.limit)
+        expect(JSON.parse(res.text).posts).toHaveLength(query.limit)
+        expect(JSON.parse(res.text).hasNextPage).toBeTruthy()
       })
   })
 
