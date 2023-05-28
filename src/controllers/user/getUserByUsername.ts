@@ -33,7 +33,12 @@ const getUserByUsername = async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.status(httpStatus.ok.code).json(user)
   } catch (error) {
-    res.status(httpStatus.badRequest.code).json({
+    console.log(
+      "🚀 ~ file: getUserByUsername.ts:36 ~ getUserByUsername ~ error:",
+      error
+    )
+
+    return res.status(httpStatus.badRequest.code).json({
       message: error,
     })
   }
