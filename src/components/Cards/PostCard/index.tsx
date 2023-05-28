@@ -9,12 +9,19 @@ import { IPostWithPopulated } from "@/ts/interfaces/post"
 import likePostService from "@/services/post/likePostService"
 import { RootState } from "@/app/store"
 import { AppMessageContext } from "@/context/AppMessageContext"
+import CommentsList from "@/components/Lists/CommentsList"
+import useMenu from "@/hooks/general/useMenu"
 
 export default function PostCard(postProps: IPostWithPopulated) {
   // eslint-disable-next-line no-unused-vars
   const [post, setPost] = useState<IPostWithPopulated>(postProps)
   const { accountInfo, auth } = useSelector((state: RootState) => state.user)
   const { handleMessage } = useContext(AppMessageContext)
+  const {
+    isOpen: isOpenCommentsMenu,
+    handleClose: handleCloseCommentsMenu,
+    handleOpen: handleOpenCommentsMenu,
+  } = useMenu()
 
   const handleLike = async () => {
     const { body, message, success } = await likePostService(
@@ -28,10 +35,6 @@ export default function PostCard(postProps: IPostWithPopulated) {
     }
 
     handleMessage(message)
-  }
-
-  const handleOpenCommentsMenu = async () => {
-    console.log("opened")
   }
 
   const handleSharePost = async () => {
@@ -56,6 +59,12 @@ export default function PostCard(postProps: IPostWithPopulated) {
         handleLike={handleLike}
         handleOpenCommentsMenu={handleOpenCommentsMenu}
         handleSharePost={handleSharePost}
+      />
+
+      <CommentsList
+        postId={post.id}
+        open={isOpenCommentsMenu}
+        handleClose={handleCloseCommentsMenu}
       />
     </>
   )
