@@ -18,8 +18,8 @@ const apiCommentsRoutes = {
 
   getById: (commentId: string) => `${baseUrl}/${commentId}`,
 
-  getComments: (offset: number, limit: number) =>
-    `${baseUrl}/list?offset=${offset}&limit=${limit}`,
+  getComments: (postId: string, offset: number, limit: number) =>
+    `${baseUrl}/list?postId=${postId}&offset=${offset}&limit=${limit}`,
 }
 
 export default apiCommentsRoutes
