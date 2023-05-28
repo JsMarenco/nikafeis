@@ -5,7 +5,7 @@ const apiUserRoutes = {
 
   register: `${baseUrl}`,
 
-  getUserByUsername: (username: string) => `${baseUrl}/${username}`,
+  getUserByUsername: (username: string) => `${baseUrl}/username/${username}`,
 
   getUserById: (userId: string) => `${baseUrl}/${userId}`,
 
