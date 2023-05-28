@@ -5,6 +5,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import initialUserState from "@/utils/states/user"
 import { IInitialUserState } from "@/ts/interfaces/states/states"
 import setUserReducer from "./reducers/setUser"
+import setLogoutReducer from "./reducers/setLogout"
 
 const initialUser: IInitialUserState = initialUserState
 
@@ -13,9 +14,10 @@ const userSlice = createSlice({
   initialState: initialUser,
   reducers: {
     setUser: setUserReducer,
+    setLogout: setLogoutReducer,
   },
 })
 
-export const { setUser } = userSlice.actions
+export const { setUser, setLogout } = userSlice.actions
 
 export default userSlice.reducer
