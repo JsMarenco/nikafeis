@@ -45,7 +45,6 @@ export default function CreateComment({ postId }: CreateCommentProps) {
       auth.accessToken
     )
 
-    console.log("🚀 ~ file: index.tsx:51 ~ handleSubmit ~ message:", message)
     if (status === httpStatus.created.code) {
       handleMessage(message)
     }
