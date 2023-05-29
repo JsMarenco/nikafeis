@@ -4,10 +4,10 @@ import { Stack } from "@mui/material"
 
 // Current project dependencies
 import CreatePost from "@/components/CreatePost"
-import PostsList from "@/components/Lists/PostsList"
 import useChangePageTitle from "@/hooks/general/useChangePageTitle"
 import appTitles from "@/ts/enums/appTitles"
 import Layout from "@/components/Layout"
+import RecentPosts from "@/components/Sections/RecentPosts"
 
 export default function Home() {
   useChangePageTitle(appTitles.home)
@@ -19,7 +19,7 @@ export default function Home() {
           <Stack spacing={2}>
             <CreatePost />
 
-            <PostsList />
+            <RecentPosts />
           </Stack>
         </Grid>
 
