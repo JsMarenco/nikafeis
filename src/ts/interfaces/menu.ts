@@ -4,13 +4,14 @@ import { ReactNode } from "react"
 
 // Current project dependencies
 
-export interface CustomMenuItemProps {
+export interface MenuSectionItemProps {
   icon: ReactNode
   label: string
   link: string
 }
 
-export interface CustomMenuProps {
-  items: CustomMenuItemProps[]
+export interface MenuSectionProps {
+  items: MenuSectionItemProps[]
   label: string
+  children?: ReactNode
 }
