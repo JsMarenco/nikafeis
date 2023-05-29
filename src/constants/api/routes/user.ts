@@ -10,7 +10,7 @@ const apiUserRoutes = {
   getUserById: (userId: string) => `${baseUrl}/${userId}`,
 
   getUserPostsByUsername: (username: string, offset: number, limit: number) =>
-    `${baseUrl}/${username}/posts?offset=${offset}&limit=${limit}`,
+    `${baseUrl}/username/${username}/posts?offset=${offset}&limit=${limit}`,
 
   deleteUser: (userId: string) => `${baseUrl}/${userId}`,
 
