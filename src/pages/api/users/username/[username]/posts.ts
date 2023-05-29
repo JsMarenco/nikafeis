@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import httpStatus from "@/constants/common/httpStatus"
 import getUserPostsByUsername from "@/controllers/user/getUserPostByUsername"
 
-export default function getUserByUsernameHandler(
+export default function getUserPostByUsernameHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
