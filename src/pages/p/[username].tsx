@@ -68,7 +68,12 @@ export default function UserProfile() {
 
               <Grid xs={12} md={5}>
                 <Stack spacing={2}>
-                  <ProfileAbout description={user.description} />
+                  <ProfileAbout
+                    description={user.description}
+                    posts={user.posts}
+                    createdAt={user.createdAt}
+                    friends={user.friends}
+                  />
                 </Stack>
               </Grid>
 
