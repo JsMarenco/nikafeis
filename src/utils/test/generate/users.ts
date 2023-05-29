@@ -7,6 +7,8 @@ import { IRegisterUser, IUser } from "@/ts/interfaces/user"
 import connectWithRetry from "@/database"
 import { generateUsername } from "@/utils/basic"
 
+export const fakeUsersPassword = "this is a super password"
+
 export const generateFakeUser = (): IRegisterUser => {
   const email = `${faker.person.fullName()}_${faker.number.int({
     min: 1,
@@ -15,14 +17,12 @@ export const generateFakeUser = (): IRegisterUser => {
     .toLocaleLowerCase()
     .replace(" ", "")
 
-  const password = faker.lorem.sentence({ min: 2, max: 5 })
-
   return {
     firstname: faker.person.firstName("male"),
     lastname: faker.person.lastName("male"),
     email,
-    password,
-    confirmPassword: password,
+    password: fakeUsersPassword,
+    confirmPassword: fakeUsersPassword,
   }
 }
 
