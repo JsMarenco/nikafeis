@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 
 // Third-party dependencies
-import Grid from "@mui/material/Unstable_Grid2/Grid2"
+import Grid from "@mui/material/Unstable_Grid2"
 import { Container } from "@mui/material"
 
 // Current project dependencies

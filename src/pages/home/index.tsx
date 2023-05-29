@@ -1,5 +1,5 @@
 // Third-party dependencies
-import Grid from "@mui/material/Unstable_Grid2/Grid2"
+import Grid from "@mui/material/Unstable_Grid2"
 import { Stack } from "@mui/material"
 
 // Current project dependencies
