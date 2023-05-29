@@ -7,6 +7,11 @@ import { IUser } from "@/ts/interfaces/user"
 import Post from "@/models/Post"
 import connectWithRetry from "@/database"
 
+interface postWithAuthor extends ICreatePost {
+  author: string
+  postImages: string[]
+}
+
 export const generateFakerPost = (): ICreatePost => {
   return {
     title: faker.lorem.words(4),
@@ -35,11 +40,6 @@ export const uploadFakePostsToDB = async (
 
     await connectWithRetry()
 
-    interface postWithAuthor extends ICreatePost {
-      author: string
-      postImages: string[]
-    }
-
     const postsWithAuthor: postWithAuthor[] = []
 
     for (let i = 0; i < users.length; i++) {
@@ -62,4 +62,30 @@ export const uploadFakePostsToDB = async (
   }
 
   return []
+}
+
+export const createPostsForUser = async (
+  user: IUser,
+  posts: ICreatePost[]
+): Promise<IPost[]> => {
+  try {
+    await Post.deleteMany({})
+
+    await connectWithRetry()
+
+    const postsWithAuthor: postWithAuthor[] = posts.map((post) => ({
+      ...post,
+      author: user.id,
+      postImages: [],
+    }))
+
+    await Post.insertMany(postsWithAuthor)
+
+    const postsDB = await Post.find({ author: user.id })
+
+    return postsDB
+  } catch (error) {
+    console.log("🚀 ~ file: posts.ts:62 ~ error:", error)
+    return []
+  }
 }
