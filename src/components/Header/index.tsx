@@ -6,51 +6,34 @@ import {
   Stack,
   Toolbar,
   IconButton,
-  Avatar,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  Divider,
+  SwipeableDrawer,
 } from "@mui/material"
 import DarkModeIcon from "@mui/icons-material/DarkMode"
 import LightModeIcon from "@mui/icons-material/LightMode"
-import { useDispatch, useSelector } from "react-redux"
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"
-import LogoutIcon from "@mui/icons-material/Logout"
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 
 // Current project dependencies
 import Logo from "../Logo"
 import { AppThemeContext } from "@/context/AppThemeContext"
 import { appThemes } from "@/themes"
-import { RootState } from "@/app/store"
-import { setLogout } from "@/app/slices/user"
-import { useRouter } from "next/router"
-import appRoutes from "@/constants/app/routes"
-import Link from "next/link"
+import MenuSection from "../Menus/MenuSection"
+import { SettingsLinks } from "../Menus/SettingsLinks"
+import { AccountLinks } from "../Menus/AccountLinks"
+import { GeneralLinks } from "../Menus/GeneralLinks"
+import { MoreLinks } from "../Menus/MoreLinks"
 
 export default function Header() {
   const { handleChangeThemeApp, currentThemeName } = useContext(AppThemeContext)
-  const { personalInfo, accountInfo } = useSelector(
-    (state: RootState) => state.user
-  )
-  const dispatch = useDispatch()
-  const router = useRouter()
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const isAvatarMenuOpen = Boolean(anchorEl)
-  // eslint-disable-next-line no-undef
+  const isMenuOpen = Boolean(anchorEl)
 
-  const handleClickAvatarMenu = (event: MouseEvent<HTMLElement>) => {
+  const handleClickMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleCloseAvatarMenu = () => {
+  const handleCloseMenu = () => {
     setAnchorEl(null)
-  }
-
-  const handleLogout = () => {
-    dispatch(setLogout())
-    router.push(appRoutes.auth.login)
   }
 
   return (
@@ -84,69 +67,28 @@ export default function Header() {
             )}
           </IconButton>
 
-          <IconButton onClick={handleClickAvatarMenu}>
-            <Avatar
-              src={personalInfo.avatarUrl}
-              alt={`${personalInfo.firstname} ${personalInfo.lastname}'s avatar`}
-            >
-              {personalInfo.firstname.charAt(0).toLocaleUpperCase()}
-            </Avatar>
+          <IconButton onClick={handleClickMenu}>
+            <MenuOutlinedIcon />
           </IconButton>
 
-          <Menu
-            anchorEl={anchorEl}
-            id="account-menu"
-            open={isAvatarMenuOpen}
-            onClose={handleCloseAvatarMenu}
-            onClick={handleCloseAvatarMenu}
-            PaperProps={{
-              elevation: 0,
-              sx: {
-                overflow: "visible",
-                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                mt: 1.5,
-                "& .MuiAvatar-root": {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                "&:before": {
-                  // eslint-disable-next-line quotes
-                  content: '""',
-                  display: "block",
-                  position: "absolute",
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: "background.paper",
-                  transform: "translateY(-50%) rotate(45deg)",
-                  zIndex: 0,
-                },
+          <SwipeableDrawer
+            anchor={"right"}
+            open={isMenuOpen}
+            onClose={handleCloseMenu}
+            onOpen={handleClickMenu}
+            sx={{
+              ".MuiDrawer-paper": {
+                backgroundImage: "none",
+                width: "250px",
+                bgcolor: "background.default",
               },
             }}
-            transformOrigin={{ horizontal: "right", vertical: "top" }}
-            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <Link href={appRoutes.profile.view(accountInfo.username)}>
-              <MenuItem>
-                <ListItemIcon>
-                  <AccountCircleIcon fontSize="small" />
-                </ListItemIcon>
-                Profile
-              </MenuItem>
-            </Link>
-
-            <Divider sx={{ my: 1.5 }} />
-
-            <MenuItem onClick={handleLogout}>
-              <ListItemIcon>
-                <LogoutIcon fontSize="small" />
-              </ListItemIcon>
-              Logout
-            </MenuItem>
-          </Menu>
+            <MenuSection items={GeneralLinks} label={"General"} />
+            <MenuSection items={AccountLinks} label={"Account"} />
+            <MenuSection items={SettingsLinks} label={"Settings"} />
+            <MenuSection items={MoreLinks} label={"More"} />
+          </SwipeableDrawer>
         </Stack>
       </Toolbar>
     </AppBar>
