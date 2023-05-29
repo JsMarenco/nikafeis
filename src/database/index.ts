@@ -1,6 +1,8 @@
 // Imports from third-party libraries
 import { connect, connection } from "mongoose"
 
+let isConnected = false
+
 /**
  * @function connectWithRetry
  * @async
@@ -27,7 +29,13 @@ const connectWithRetry = async () => {
 
     await connect(MONGODB_URI, options)
 
-    console.log("We are connected to the database!")
+    if (!isConnected) {
+      await connect(MONGODB_URI, options)
+      isConnected = true
+      console.log("New database connection established!")
+    } else {
+      console.log("Reusing existing database connection.")
+    }
   } catch (error) {
     console.error("An error occurred while connecting to the database:", error)
   }
