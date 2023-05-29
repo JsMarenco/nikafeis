@@ -39,8 +39,8 @@ const lightTheme = createTheme({
       secondary: "#5c5a5a",
     },
     background: {
-      paper: "#FFF2F2",
-      default: "#F2F9FF",
+      paper: "#FFFFFF",
+      default: "#F5F6FA",
     },
     divider: "#5c5a5a",
   },
