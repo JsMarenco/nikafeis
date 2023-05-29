@@ -33,8 +33,8 @@ const forgotPassword = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (user) {
       const payload = {
-        userId: user.id,
-        userEmail: user.email,
+        id: user.id,
+        email: user.email,
       }
 
       const token = await generateJWT(payload, "10m")
