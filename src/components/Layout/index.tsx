@@ -2,7 +2,7 @@ import { ReactNode } from "react"
 
 // Third-party dependencies
 import Grid from "@mui/material/Unstable_Grid2/Grid2"
-import { Box } from "@mui/material"
+import { Container } from "@mui/material"
 
 // Current project dependencies
 import Header from "@/components/Header"
@@ -16,18 +16,8 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Header />
         </Grid>
 
-        <Grid
-          sm={3}
-          sx={{
-            display: {
-              xs: "none",
-              sm: "block",
-            },
-          }}
-        ></Grid>
-
-        <Grid xs={12} sm={9}>
-          <Box>{children}</Box>
+        <Grid xs={12}>
+          <Container maxWidth="xl">{children}</Container>
         </Grid>
       </Grid>
 
