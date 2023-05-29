@@ -24,7 +24,7 @@ const sendFriendRequest = async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    if (!senderIdValue || !receiverIdValue) {
+    if (senderIdValue === receiverIdValue) {
       return res.status(httpStatus.badRequest.code).json({
         message: apiMessages.errors.friendRequest.selfFriendRequest,
       })
@@ -32,10 +32,20 @@ const sendFriendRequest = async (req: NextApiRequest, res: NextApiResponse) => {
 
     await connectWithRetry()
 
-    const sender: HydratedDocument<IUser> | null = await User.findById(senderId)
-    const receiver: HydratedDocument<IUser> | null = await User.findById(
-      receiverId
-    )
+    /**
+     * Retrieves the sender and receiver documents based on their IDs.
+     * @param {string} senderIdValue - The ID of the sender.
+     * @param {string} receiverIdValue - The ID of the receiver.
+     * @returns {Promise<[HydratedDocument<IUser> | null, HydratedDocument<IUser> | null]>}
+     * A Promise that resolves to an array containing the sender and receiver documents, or null if not found.
+     */
+    const [sender, receiver]: [
+      HydratedDocument<IUser> | null,
+      HydratedDocument<IUser> | null
+    ] = await Promise.all([
+      User.findById(senderIdValue),
+      User.findById(receiverIdValue),
+    ])
 
     if (!sender || !receiver) {
       return res.status(httpStatus.notFound.code).json({
@@ -46,7 +56,7 @@ const sendFriendRequest = async (req: NextApiRequest, res: NextApiResponse) => {
     // Check if the users are already friends
     const isFriend: HydratedDocument<IUser> | null = await User.findOne({
       _id: sender.id,
-      friends: { $all: [receiver.id] },
+      friends: { $in: [receiver.id] },
     })
 
     if (isFriend) {
@@ -57,8 +67,8 @@ const sendFriendRequest = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const existingFriendRequest = await FriendRequest.findOne({
       $or: [
-        { from: sender._id, to: receiver._id },
-        { from: receiver._id, to: sender._id },
+        { from: sender.id, to: receiver.id },
+        { from: receiver.id, to: sender.id },
       ],
     })
 
@@ -68,44 +78,37 @@ const sendFriendRequest = async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    if (!existingFriendRequest) {
-      const friendRequest: HydratedDocument<IFriendRequest> = new FriendRequest(
-        {
-          from: sender.id,
-          to: receiver.id,
-        }
-      )
+    const friendRequest: HydratedDocument<IFriendRequest> =
+      await new FriendRequest({ from: sender.id, to: receiver.id })
 
-      await friendRequest.save()
+    await friendRequest.save()
 
-      sender.friendRequestsSent.push(friendRequest.id)
-      receiver.friendRequests.push(friendRequest.id)
+    await User.findByIdAndUpdate(senderId, {
+      $push: { friendRequestsSent: friendRequest.id },
+    })
 
-      await sender.save()
-      await receiver.save()
+    await User.findByIdAndUpdate(receiverId, {
+      $push: { friendRequests: friendRequest.id },
+    })
 
-      const userFriendRequestSent = await User.findById(friendRequest._id)
-        .lean()
-        .select("friendRequestsSent")
+    const senderFriendRequestsSent: HydratedDocument<IUser> | null =
+      await User.findById(senderId)
 
-      res.status(httpStatus.created.code).json({
-        userFriendRequestSent,
+    if (senderFriendRequestsSent) {
+      return res.status(httpStatus.created.code).json({
+        friendRequestsSent: senderFriendRequestsSent.friendRequestsSent,
         message: apiMessages.success.friendRequest.sent,
       })
     }
   } catch (error: any) {
-    switch (error.name) {
-      case "CastError":
-        res.status(httpStatus.badRequest.code).send({
-          message: apiMessages.errors.authentication.invalidId,
-        })
-        break
-
-      default:
-        res.status(httpStatus.serverError.code).json({
-          message: httpStatus.serverError.message,
-        })
-        break
+    if (error.name === "CastError") {
+      return res.status(httpStatus.badRequest.code).send({
+        message: apiMessages.errors.authentication.invalidId,
+      })
+    } else {
+      return res.status(httpStatus.serverError.code).json({
+        message: httpStatus.serverError.message,
+      })
     }
   }
 }
