@@ -119,7 +119,7 @@ export default function ProfileHeader({
             spacing={1}
           >
             {accountInfo.id !== id && !relationships.friends.includes(id) && (
-              <SendFriendRequest />
+              <SendFriendRequest receiverId={id} />
             )}
           </Stack>
         </Stack>
