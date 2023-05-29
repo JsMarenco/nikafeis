@@ -7,21 +7,20 @@ import { IGlobalApiResponse } from "@/ts/interfaces/api"
 import apiRoutes from "@/constants/api/routes"
 
 const sendFriendRequestService = async (
-  username: string,
-  userId: string,
+  senderId: string,
+  receiverId: string,
   token: string
 ) => {
   try {
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     }
 
-    const user = await axios.get(apiRoutes.user.getUserByUsername(username))
-
     const { data, status } = await axios.post(
-      apiRoutes.friendRequest.send(userId, user.data.id),
+      apiRoutes.friendRequest.send(senderId, receiverId),
+      {},
       config
     )
 
