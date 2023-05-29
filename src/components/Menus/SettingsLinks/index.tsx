@@ -1,21 +1,27 @@
 // Third-party dependencies
-import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined"
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined"
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined"
+import PrivacyTipOutlinedIcon from "@mui/icons-material/PrivacyTipOutlined"
+import TranslateOutlinedIcon from "@mui/icons-material/TranslateOutlined"
 
 // Current project dependencies
-import { CustomMenuItemProps } from "@/ts/interfaces/menu"
+import { MenuSectionItemProps } from "@/ts/interfaces/menu"
 import appRoutes from "@/constants/app/routes"
 
 const iconSize = "medium"
 
-export const SettingsLinks: CustomMenuItemProps[] = [
+export const SettingsLinks: MenuSectionItemProps[] = [
   {
-    icon: <ManageAccountsOutlinedIcon fontSize={iconSize} />,
-    label: "Profile",
-    link: appRoutes.settings.profile,
+    icon: <TranslateOutlinedIcon fontSize={iconSize} />,
+    label: "General",
+    link: appRoutes.settings.general,
   },
   {
-    icon: <AdminPanelSettingsOutlinedIcon fontSize={iconSize} />,
+    icon: <PrivacyTipOutlinedIcon fontSize={iconSize} />,
+    label: "Privacy",
+    link: appRoutes.settings.privacy,
+  },
+  {
+    icon: <AccountCircleOutlinedIcon fontSize={iconSize} />,
     label: "Account",
     link: appRoutes.settings.account,
   },
