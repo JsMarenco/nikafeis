@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 // Third-party dependencies
-import Grid from "@mui/material/Unstable_Grid2/Grid2"
+import Grid from "@mui/material/Unstable_Grid2"
 import { useRouter } from "next/router"
 import { useSelector } from "react-redux"
 
@@ -9,7 +9,6 @@ import { useSelector } from "react-redux"
 import ProfileHeader from "@/components/Profile/ProfileHeader"
 import Layout from "@/components/Layout"
 import ProfileAbout from "@/components/Profile/ProfileAbout"
-import PostsList from "@/components/Lists/PostsList"
 import { Box, Stack, Typography, Button } from "@mui/material"
 import CreatePost from "@/components/CreatePost"
 import useChangePageTitle from "@/hooks/general/useChangePageTitle"
@@ -19,6 +18,7 @@ import userNotFoundPng from "@/assets/images/bg_404.png"
 import Link from "next/link"
 import appRoutes from "@/constants/app/routes"
 import { RootState } from "@/app/store"
+import ProfilePosts from "@/components/Sections/ProfilePosts"
 
 export default function UserProfile() {
   const router = useRouter()
@@ -81,7 +81,7 @@ export default function UserProfile() {
                 <Stack spacing={2}>
                   {accountInfo.username === username && <CreatePost />}
 
-                  <PostsList />
+                  <ProfilePosts username={user.username} />
                 </Stack>
               </Grid>
             </>
