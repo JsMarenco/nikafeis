@@ -19,18 +19,6 @@ const getFriendRequestsByUserId = async (
     const offsetValue = parseInt(offset as string)
     const limitValue = parseInt(limit as string)
 
-    if (isNaN(offsetValue)) {
-      return res.status(httpStatus.badRequest.code).json({
-        message: apiMessages.errors.common.offsetMustBeNumber,
-      })
-    }
-
-    if (isNaN(limitValue)) {
-      return res.status(httpStatus.badRequest.code).json({
-        message: apiMessages.errors.common.offsetMustBeNumber,
-      })
-    }
-
     if (!userId) {
       return res.status(httpStatus.badRequest.code).json({
         message: apiMessages.errors.common.requiredFields,
@@ -54,11 +42,27 @@ const getFriendRequestsByUserId = async (
         path: "from",
         select: userProjection,
       })
-      .limit(offsetValue)
-      .skip(limitValue)
+      .limit(limitValue)
+      .skip(offsetValue)
 
-    res.status(httpStatus.ok.code).json(userRequests)
+    if (userRequests) {
+      const FriendRequestLength = await FriendRequest.countDocuments({
+        to: userId,
+      })
+
+      const hasNextPage = offsetValue + limitValue < FriendRequestLength
+
+      return res.status(httpStatus.ok.code).json({
+        friendRequest: userRequests,
+        hasNextPage,
+      })
+    }
   } catch (error: any) {
+    console.log(
+      "🚀 ~ file: getFriendRequestsByUserId.ts:61 ~ error: any:",
+      error
+    )
+
     switch (error.name) {
       case "CastError":
         res.status(httpStatus.badRequest.code).send({
