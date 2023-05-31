@@ -1,6 +1,6 @@
 // Third-party dependencies
 import { NextApiRequest, NextApiResponse } from "next"
-import mongoose, { HydratedDocument } from "mongoose"
+import { HydratedDocument } from "mongoose"
 import bcrypt from "bcrypt"
 
 // Current project dependencies
@@ -90,8 +90,6 @@ const registerUser = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(httpStatus.serverError.code).json({
       message: httpStatus.serverError.message,
     })
-  } finally {
-    mongoose.disconnect()
   }
 }
 

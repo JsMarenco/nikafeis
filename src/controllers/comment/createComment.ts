@@ -1,6 +1,6 @@
 // Third-party dependencies
 import type { NextApiRequest, NextApiResponse } from "next"
-import mongoose, { HydratedDocument } from "mongoose"
+import { HydratedDocument } from "mongoose"
 
 // Current project dependencies
 import httpStatus from "@/constants/common/httpStatus"
@@ -73,8 +73,6 @@ const createComment = async (req: NextApiRequest, res: NextApiResponse) => {
         })
         break
     }
-  } finally {
-    mongoose.disconnect()
   }
 }
 

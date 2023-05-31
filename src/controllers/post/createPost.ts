@@ -1,5 +1,5 @@
 // Third-party dependencies
-import mongoose, { HydratedDocument } from "mongoose"
+import { HydratedDocument } from "mongoose"
 import { NextApiRequest, NextApiResponse } from "next"
 
 // Current project dependencies
@@ -67,8 +67,6 @@ const createPost = async (req: NextApiRequest, res: NextApiResponse) => {
         })
         break
     }
-  } finally {
-    mongoose.disconnect()
   }
 }
 

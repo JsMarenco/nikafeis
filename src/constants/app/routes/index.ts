@@ -20,6 +20,10 @@ const appRoutes = {
     friends: "/friends",
     privacy: "/privacy",
   },
+  friendRequest: {
+    sent: "/friend-requests/sent",
+    receive: "/friend-requests/receive",
+  },
   home: "/home",
   notFound: "/404",
   profile: {
