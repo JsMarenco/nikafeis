@@ -17,7 +17,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         </Grid>
 
         <Grid xs={12}>
-          <Container maxWidth="xl">{children}</Container>
+          <Container maxWidth="xl" sx={{ mb: 2 }}>
+            {children}
+          </Container>
         </Grid>
       </Grid>
 
