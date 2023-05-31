@@ -10,11 +10,23 @@ let isConnected = false
  */
 const connectWithRetry = async () => {
   try {
+    let MONGODB_URI = ""
+
     const DB_NAME = process.env.DB_NAME || ""
     const DB_USER = process.env.DB_USER || ""
     const DB_PASSWORD = process.env.DB_PASSWORD || ""
+    const DB_CLUSTER = process.env.DB_CLUSTER || ""
+    const DB_URI = process.env.DB_URI || ""
 
-    const MONGODB_URI = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.yj7huxx.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+    if (DB_URI) {
+      MONGODB_URI = DB_URI
+    } else if (DB_NAME && DB_USER && DB_PASSWORD && DB_CLUSTER) {
+      MONGODB_URI = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_CLUSTER}/${DB_NAME}?retryWrites=true&w=majority`
+    } else {
+      console.log("Missing required MongoDB connection details.")
+
+      return
+    }
 
     const options = {
       useNewUrlParser: true,
