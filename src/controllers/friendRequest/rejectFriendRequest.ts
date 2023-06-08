@@ -65,7 +65,7 @@ const rejectFriendRequest = async (
 
     if (userFriendRequests) {
       return res.status(httpStatus.ok.code).json({
-        userFriendRequests: userFriendRequests.friendRequests,
+        friendRequests: userFriendRequests.friendRequests,
         message: apiMessages.success.friendRequest.rejected,
       })
     }
