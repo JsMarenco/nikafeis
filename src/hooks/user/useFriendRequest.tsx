@@ -8,13 +8,16 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/app/store"
 import { AppMessageContext } from "@/context/AppMessageContext"
 import sendFriendRequestService from "@/services/friendRequest/sendFriendRequestService"
-import { setUserFriendRequestsSent } from "@/app/slices/user"
+import { setUserFriendRequestsSent, setUserFriends } from "@/app/slices/user"
 import { IUseFriendRequest } from "@/ts/interfaces/hooks/useFriendRequest"
+import acceptFriendRequestService from "@/services/friendRequest/acceptFriendRequestService"
 
 export default function useFriendRequest(): IUseFriendRequest {
   const [loading, setLoading] = useState(false)
   const { handleMessage } = useContext(AppMessageContext)
-  const { accountInfo, auth } = useSelector((state: RootState) => state.user)
+  const { accountInfo, auth, relationships } = useSelector(
+    (state: RootState) => state.user
+  )
   const dispatch = useDispatch()
 
   /**
@@ -26,11 +29,26 @@ export default function useFriendRequest(): IUseFriendRequest {
    */
   const handleAcceptFriendRequest = async (
     friendRequestId: string,
-    receiverId: string
+    receiverId: string,
+    cb?: () => void
   ): Promise<void> => {
     setLoading(true)
-    console.log("Accepted")
+    const { body, success, message } = await acceptFriendRequestService(
+      friendRequestId,
+      receiverId,
+      auth.accessToken
+    )
+
+    if (success) {
+      dispatch(setUserFriends(body.friends))
+
+      if (cb) {
+        cb()
+      }
+    }
+
     setLoading(false)
+    handleMessage(message)
   }
 
   /**
@@ -55,7 +73,10 @@ export default function useFriendRequest(): IUseFriendRequest {
    * @param {string} receiverId - The ID of the receiver.
    * @returns {Promise<void>} - A Promise that resolves when the friend request is sent.
    */
-  const handleSendFriendRequest = async (receiverId: string): Promise<void> => {
+  const handleSendFriendRequest = async (
+    receiverId: string,
+    cb?: () => void
+  ): Promise<void> => {
     setLoading(true)
 
     const { body, success, message } = await sendFriendRequestService(
@@ -66,6 +87,10 @@ export default function useFriendRequest(): IUseFriendRequest {
 
     if (success) {
       dispatch(setUserFriendRequestsSent(body.friendRequestsSent))
+
+      if (cb) {
+        cb()
+      }
     }
 
     setLoading(false)
