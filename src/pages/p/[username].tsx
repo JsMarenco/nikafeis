@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react"
 
 // Third-party dependencies
+import { Stack, Button } from "@mui/material"
 import Grid from "@mui/material/Unstable_Grid2"
 import { useRouter } from "next/router"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import Link from "next/link"
 
 // Current project dependencies
 import ProfileHeader from "@/components/Profile/ProfileHeader"
 import Layout from "@/components/Layout"
 import ProfileAbout from "@/components/Profile/ProfileAbout"
-import { Box, Stack, Typography, Button } from "@mui/material"
 import CreatePost from "@/components/CreatePost"
 import useChangePageTitle from "@/hooks/general/useChangePageTitle"
 import { IUser } from "@/ts/interfaces/user"
 import getUserByUsernameService from "@/services/user/getUserByUsernameService"
-import userNotFoundPng from "@/assets/images/bg_404.png"
-import Link from "next/link"
+import userNotFoundPng from "@/assets/images/bg_user_not_found.png"
 import appRoutes from "@/constants/app/routes"
 import { RootState } from "@/app/store"
 import ProfilePosts from "@/components/Sections/ProfilePosts"
+import { setUser as setMainUser } from "@/app/slices/user"
+import NoDataBox from "@/components/NoDataBox"
 
 export default function UserProfile() {
   const router = useRouter()
@@ -29,24 +31,28 @@ export default function UserProfile() {
   const [loading, setLoading] = useState(true)
   const [userFound, setUserFound] = useState(true)
   const { accountInfo } = useSelector((state: RootState) => state.user)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { body, success } = await getUserByUsernameService(
-        username as string
-      )
+    fetchUserInfo()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [username])
 
-      if (success) {
-        setUser(body)
-      } else {
-        setUserFound(false)
-      }
+  const fetchUserInfo = async () => {
+    const { body, success } = await getUserByUsernameService(username as string)
 
-      setLoading(false)
+    if (body.id === accountInfo.id) {
+      dispatch(setMainUser(body))
     }
 
-    fetchData()
-  }, [username])
+    if (success) {
+      setUser(body)
+    } else {
+      setUserFound(false)
+    }
+
+    setLoading(false)
+  }
 
   return (
     <>
@@ -61,8 +67,11 @@ export default function UserProfile() {
                   firstname={user.firstname}
                   lastname={user.lastname}
                   avatarUrl={user.avatarUrl}
-                  username={user.username}
+                  loading={loading}
                   coverUrl={user.coverUrl}
+                  friendRequests={user.friendRequests}
+                  friendRequestsSent={user.friendRequestsSent}
+                  fetchUserInfo={fetchUserInfo}
                 />
               </Grid>
 
@@ -89,40 +98,27 @@ export default function UserProfile() {
 
           {!loading && !userFound && (
             <Grid xs={12}>
-              <Box
-                sx={{
-                  backgroundImage: `url(${userNotFoundPng.src})`,
-                  height: "350px",
-                  width: "auto",
-                  backgroundPosition: "center",
-                  backgroundSize: "contain",
-                  backgroundRepeat: "no-repeat",
-                }}
-              />
-
-              <Typography
-                variant="h5"
-                color="text.primary"
-                fontWeight={400}
-                align="center"
-                my={2}
+              <NoDataBox
+                label={"User not found."}
+                src={userNotFoundPng.src}
+                width={userNotFoundPng.width}
+                height={userNotFoundPng.height}
+                alt={"User not found image"}
               >
-                User not found
-              </Typography>
-
-              <Link href={appRoutes.home}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{
-                    maxWith: "xs",
-                    mx: "auto",
-                    display: "block",
-                  }}
-                >
-                  Back home
-                </Button>
-              </Link>
+                <Link href={appRoutes.home}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{
+                      maxWith: "xs",
+                      mx: "auto",
+                      display: "block",
+                    }}
+                  >
+                    Back home
+                  </Button>
+                </Link>
+              </NoDataBox>
             </Grid>
           )}
         </Grid>
