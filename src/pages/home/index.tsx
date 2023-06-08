@@ -8,8 +8,9 @@ import useChangePageTitle from "@/hooks/general/useChangePageTitle"
 import appTitles from "@/ts/enums/appTitles"
 import Layout from "@/components/Layout"
 import RecentPosts from "@/components/Sections/RecentPosts"
-import FriendRequests from "@/components/Sections/FriendRequests"
+import FriendRequestsReceived from "@/components/Sections/FriendRequestsReceived"
 import Connections from "@/components/Sections/Connections"
+import Link from "next/link"
 
 export default function Home() {
   useChangePageTitle(appTitles.home)
@@ -20,14 +21,15 @@ export default function Home() {
         <Grid xs={12} md={8}>
           <Stack spacing={2}>
             <CreatePost />
+            <Link href="/p/jsjs">ssm</Link>
 
             <RecentPosts />
           </Stack>
         </Grid>
 
-        <Grid xs={0} md={4}>
+        <Grid xs={12} md={4}>
           <Stack spacing={2}>
-            <FriendRequests />
+            <FriendRequestsReceived />
 
             <Connections />
           </Stack>
