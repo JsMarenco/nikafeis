@@ -4,12 +4,18 @@ export interface IUseFriendRequest {
 
   handleAcceptFriendRequest: (
     friendRequestId: string,
-    receiverId: string
+    receiverId: string,
+    cb?: () => void
   ) => void
-  handleRejectFriendRequest: (friendRequestId: string, senderId: string) => void
-  handleSendFriendRequest: (receiverId: string) => void
+  handleRejectFriendRequest: (
+    friendRequestId: string,
+    senderId: string,
+    cb?: () => void
+  ) => void
+  handleSendFriendRequest: (receiverId: string, cb?: () => void) => void
   handleCancelFriendRequest: (
     friendRequestId: string,
-    receiverId: string
+    receiverId: string,
+    cb?: () => void
   ) => void
 }
