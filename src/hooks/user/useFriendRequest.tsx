@@ -8,9 +8,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/app/store"
 import { AppMessageContext } from "@/context/AppMessageContext"
 import sendFriendRequestService from "@/services/friendRequest/sendFriendRequestService"
-import { setUserFriendRequestsSent, setUserFriends } from "@/app/slices/user"
+import {
+  setUserFriendRequests,
+  setUserFriendRequestsSent,
+  setUserFriends,
+} from "@/app/slices/user"
 import { IUseFriendRequest } from "@/ts/interfaces/hooks/useFriendRequest"
 import acceptFriendRequestService from "@/services/friendRequest/acceptFriendRequestService"
+import rejectFriendRequestService from "@/services/friendRequest/rejectFriendRequestService"
 
 export default function useFriendRequest(): IUseFriendRequest {
   const [loading, setLoading] = useState(false)
@@ -60,10 +65,26 @@ export default function useFriendRequest(): IUseFriendRequest {
    */
   const handleRejectFriendRequest = async (
     friendRequestId: string,
-    receiverId: string
+    receiverId: string,
+    cb?: () => void
   ): Promise<void> => {
     setLoading(true)
-    console.log("Reject")
+    const { body, success, message } = await rejectFriendRequestService(
+      friendRequestId,
+      receiverId,
+      auth.accessToken
+    )
+
+    if (success) {
+      dispatch(setUserFriendRequests(body.friendRequests))
+
+      if (cb) {
+        cb()
+      }
+    }
+
+    setLoading(false)
+    handleMessage(message)
     setLoading(false)
   }
 
@@ -106,7 +127,8 @@ export default function useFriendRequest(): IUseFriendRequest {
    */
   const handleCancelFriendRequest = async (
     friendRequestId: string,
-    receiverId: string
+    receiverId: string,
+    cb?: () => void
   ): Promise<void> => {
     setLoading(true)
     console.log("Cancel")
