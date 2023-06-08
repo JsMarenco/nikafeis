@@ -11,7 +11,7 @@ const apiFriendRequestRoutes = {
     `${baseUrl}/cancel?requestId=${requestId}&senderId=${senderId}`,
 
   accept: (requestId: string, receiverId: string): string =>
-    `${baseUrl}?requestId=${requestId}&receiverId=${receiverId}`,
+    `${baseUrl}/accept?requestId=${requestId}&receiverId=${receiverId}`,
 
   getSentFriendRequestsByUserId: (
     userId: string,
