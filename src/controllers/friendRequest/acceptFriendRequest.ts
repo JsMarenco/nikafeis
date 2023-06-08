@@ -16,9 +16,9 @@ const acceptFriendRequest = async (
   res: NextApiResponse
 ) => {
   try {
-    const { to = "", requestId = "" } = req.query
+    const { receiverId = "", requestId = "" } = req.query
 
-    if (!to || !requestId) {
+    if (!receiverId || !requestId) {
       return res.status(httpStatus.badRequest.code).json({
         message: apiMessages.errors.common.requiredFields,
       })
@@ -26,7 +26,9 @@ const acceptFriendRequest = async (
 
     await connectWithRetry()
 
-    const toUser: HydratedDocument<IUser> | null = await User.findById(to)
+    const toUser: HydratedDocument<IUser> | null = await User.findById(
+      receiverId
+    )
 
     if (!toUser) {
       return res.status(httpStatus.notFound.code).json({
@@ -92,10 +94,12 @@ const acceptFriendRequest = async (
 
     // deleting the friend request
     await friendRequest.deleteOne()
-    const userFriends = await User.findById(toUser.id).lean().select("friends")
+    const finalUser: HydratedDocument<IUser> | null = await User.findById(
+      toUser.id
+    )
 
     res.status(httpStatus.ok.code).json({
-      userFriends,
+      friends: finalUser?.friends,
       message: apiMessages.success.friendship.nowFriends,
     })
   } catch (error: any) {
