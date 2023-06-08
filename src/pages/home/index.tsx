@@ -10,7 +10,6 @@ import Layout from "@/components/Layout"
 import RecentPosts from "@/components/Sections/RecentPosts"
 import FriendRequestsReceived from "@/components/Sections/FriendRequestsReceived"
 import Connections from "@/components/Sections/Connections"
-import Link from "next/link"
 
 export default function Home() {
   useChangePageTitle(appTitles.home)
@@ -21,7 +20,6 @@ export default function Home() {
         <Grid xs={12} md={8}>
           <Stack spacing={2}>
             <CreatePost />
-            <Link href="/p/jsjs">ssm</Link>
 
             <RecentPosts />
           </Stack>
