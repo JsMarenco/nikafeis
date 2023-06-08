@@ -7,6 +7,7 @@ import { IInitialUserState } from "@/ts/interfaces/states/states"
 import setUserReducer from "./reducers/setUser"
 import setLogoutReducer from "./reducers/setLogout"
 import setUserFriendRequestsSentReducer from "./reducers/setUserFriendRequestsSent"
+import setUserFriendsReducer from "./reducers/setUserFriends"
 
 const initialUser: IInitialUserState = initialUserState
 
@@ -17,10 +18,11 @@ const userSlice = createSlice({
     setUser: setUserReducer,
     setLogout: setLogoutReducer,
     setUserFriendRequestsSent: setUserFriendRequestsSentReducer,
+    setUserFriends: setUserFriendsReducer,
   },
 })
 
-export const { setUser, setLogout, setUserFriendRequestsSent } =
+export const { setUser, setLogout, setUserFriendRequestsSent, setUserFriends } =
   userSlice.actions
 
 export default userSlice.reducer
