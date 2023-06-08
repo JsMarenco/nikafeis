@@ -178,7 +178,11 @@ export default function ProfileHeaderUI({
 
                   <FriendRequestButton
                     onClick={() =>
-                      handleRejectFriendRequest(friendRequestId, userId)
+                      handleRejectFriendRequest(
+                        friendRequestId,
+                        userId,
+                        fetchUserInfo
+                      )
                     }
                     matches={matches}
                     label={"Reject"}
