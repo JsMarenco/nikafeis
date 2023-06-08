@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
 
 // Third-party dependencies
-import { Box, Typography } from "@mui/material"
 
 // Current project dependencies
 import PostsList from "@/components/Lists/PostsList"
 import getRecentPostsService from "@/services/post/getRecentPostsService"
 import { IPostWithPopulated } from "@/ts/interfaces/post"
 import noPostsPng from "@/assets/images/bg_no_posts.png"
+import NoDataBox from "@/components/NoDataBox"
 
 export default function RecentPosts() {
   const [loading, setLoading] = useState(true)
@@ -50,28 +50,13 @@ export default function RecentPosts() {
       />
 
       {!loading && !hasNextPage && posts.length === 0 && (
-        <Box>
-          <Box
-            sx={{
-              backgroundImage: `url(${noPostsPng.src})`,
-              height: "350px",
-              width: "auto",
-              backgroundPosition: "center",
-              backgroundSize: "contain",
-              backgroundRepeat: "no-repeat",
-            }}
-          />
-
-          <Typography
-            variant="subtitle1"
-            color="text.primary"
-            align="center"
-            fontWeight={400}
-            my={2}
-          >
-            Be the first! Create an amazing post.
-          </Typography>
-        </Box>
+        <NoDataBox
+          label={"Be the first! Create an amazing post."}
+          src={noPostsPng.src}
+          width={noPostsPng.width}
+          height={noPostsPng.height}
+          alt={"No posts found image"}
+        />
       )}
     </>
   )
